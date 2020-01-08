@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SecretSanta.Business
+﻿namespace SecretSanta.Business
 {
     public class Gift
     {
@@ -12,7 +8,7 @@ namespace SecretSanta.Business
         public string Url { get; set; }
         public User User { get; set; }
 
-        public Gift(int id, string title,string description, string url, User user)
+        public Gift(int id, string title, string description, string url, User user)
         {
             Id = id;
             Title = title;
