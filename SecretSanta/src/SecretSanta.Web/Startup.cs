@@ -27,7 +27,7 @@ namespace SecretSanta.Web
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello from Web!").ConfigureAwait(false); //resume on any thread - changed due to warning suggestion
+                    await context.Response.WriteAsync("Hello from Web!");
                 });
             });
         }
