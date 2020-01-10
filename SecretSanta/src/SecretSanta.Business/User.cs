@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
 namespace SecretSanta.Business
 {
@@ -7,9 +7,9 @@ namespace SecretSanta.Business
         public int Id { get; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Collection<Gift> Gifts { get; }
+        public List<Gift> Gifts { get; }
 
-        public User(int id, string firstName, string lastName, Collection<Gift> gifts)
+        public User(int id, string firstName, string lastName, List<Gift> gifts)
         {
             Id = id;
             FirstName = firstName;
