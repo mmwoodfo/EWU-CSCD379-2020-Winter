@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace SecretSanta.Business
 {
     public class User
