@@ -6,7 +6,7 @@ namespace SecretSanta.Business.Tests
     public class GiftTests
     {
         [TestMethod()]
-        public void Gift()
+        public void Create_Gift_Success()
         {
             //Arrange
             int id = 0001;

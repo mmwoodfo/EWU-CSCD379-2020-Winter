@@ -7,7 +7,7 @@ namespace SecretSanta.Business.Tests
     public class UserTests
     {
         [TestMethod()]
-        public void User()
+        public void Create_User_Success()
         {
             //Arrange
             int id = 0001;
