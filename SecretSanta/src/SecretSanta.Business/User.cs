@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System;
+
 namespace SecretSanta.Business
 {
     public class User
@@ -11,9 +13,9 @@ namespace SecretSanta.Business
         public User(int id, string firstName, string lastName, List<Gift> gifts)
         {
             Id = id;
-            FirstName = firstName;
-            LastName = lastName;
-            Gifts = gifts;
+            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName));
+            LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
+            Gifts = gifts ?? new List<Gift>();
         }
     }
 }
