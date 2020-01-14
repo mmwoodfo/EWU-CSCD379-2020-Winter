@@ -37,4 +37,4 @@ steps:
   displayName: 'Test'
   inputs:
     command: 'test'
-    projects: '**/*.Tests.csproj'
+    projects: '**/*Tests.csproj'
