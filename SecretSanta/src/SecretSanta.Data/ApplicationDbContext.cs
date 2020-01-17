@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SecretSanta.Data
@@ -13,6 +8,7 @@ namespace SecretSanta.Data
     {
         public DbSet<Gift>? Gifts { get; set; }
         public DbSet<User>? Users { get; set; }
+        DbSet<UserGroup>? UserGroup { get; set; }
         public IHttpContextAccessor? HttpContextAccessor { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
@@ -24,7 +20,7 @@ namespace SecretSanta.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //TODO
+
         }
 
         public override int SaveChanges()
