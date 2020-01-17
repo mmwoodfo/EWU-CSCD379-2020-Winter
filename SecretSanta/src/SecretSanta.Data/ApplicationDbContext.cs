@@ -11,9 +11,9 @@ namespace SecretSanta.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Gift> Gifts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public IHttpContextAccessor HttpContextAccessor { get; set; }
+        public DbSet<Gift>? Gifts { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public IHttpContextAccessor? HttpContextAccessor { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -33,7 +33,7 @@ namespace SecretSanta.Data
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public override Task<int> SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default)
         {
             AddFingerPrinting();
             return base.SaveChangesAsync(cancellationToken);
