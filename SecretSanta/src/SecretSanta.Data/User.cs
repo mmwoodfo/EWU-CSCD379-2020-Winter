@@ -14,6 +14,6 @@ namespace SecretSanta.Data
         public User? Santa { get; set; }
 
         public ICollection<Gift> Gifts { get; set; } = new List<Gift>();
-        public ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
+        public List<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
     }
 }
