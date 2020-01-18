@@ -57,7 +57,7 @@ namespace SecretSanta.Data.Tests
 
             int userId = -1;
 
-            using (var applicationDbContext = new ApplicationDbContext(Options))
+            using (var applicationDbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
                 var user1 = new User
                 {
@@ -103,7 +103,7 @@ namespace SecretSanta.Data.Tests
 
             int userId = -1;
 
-            using (var applicationDbContext = new ApplicationDbContext(Options))
+            using (var applicationDbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
                 var user1 = new User
                 {
