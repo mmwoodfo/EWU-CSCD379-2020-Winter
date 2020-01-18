@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Security.Claims;
 
 namespace SecretSanta.Data
 {
@@ -59,12 +60,22 @@ namespace SecretSanta.Data
 
             foreach (var entry in added)
             {
-                //TODO
+                if (entry.Entity is FingerPrintEntityBase fingerPrintEntry)
+                {
+                    fingerPrintEntry.CreatedOn = DateTime.UtcNow;
+                    fingerPrintEntry.CreatedBy = HttpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier).Value ?? "";
+                    fingerPrintEntry.ModifiedOn = DateTime.UtcNow;
+                    fingerPrintEntry.ModifiedBy = HttpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier).Value ?? "";
+                }
             }
 
             foreach(var entry in modified)
             {
-                //TODO
+                if (entry.Entity is FingerPrintEntityBase fingerPrintEntry)
+                {
+                    fingerPrintEntry.ModifiedOn = DateTime.UtcNow;
+                    fingerPrintEntry.ModifiedBy = HttpContextAccessor?.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier).Value ?? "";
+                }
             }
         }
     }
