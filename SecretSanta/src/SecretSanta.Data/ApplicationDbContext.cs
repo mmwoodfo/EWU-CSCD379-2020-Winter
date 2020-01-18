@@ -11,7 +11,7 @@ namespace SecretSanta.Data
     {
         public DbSet<Gift> Gifts { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Group> Group { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public IHttpContextAccessor? HttpContextAccessor { get; set; }
 
 #nullable disable
