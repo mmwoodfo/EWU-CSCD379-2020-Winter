@@ -2,7 +2,7 @@
 
 namespace SecretSanta.Data
 {
-    public class Gift : EntityBase
+    public class Gift : FingerPrintEntityBase
     {
         public string Title { get => _Title; set => _Title = value ?? throw new ArgumentNullException(nameof(Title)); }
         private string _Title = string.Empty;

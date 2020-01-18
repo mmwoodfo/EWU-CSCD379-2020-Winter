@@ -16,15 +16,13 @@ namespace SecretSanta.Data.Tests
         public async Task Create_UserWithManyGroups_Success()
         {
             // Arrange
-            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(hta => hta.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) == new Claim(ClaimTypes.NameIdentifier, "imontoya"));
+            IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(hta => hta.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) == new Claim(ClaimTypes.NameIdentifier, "jdoe"));
 
-            List<Gift> gift = new List<Gift>
-            {
-                new Gift{
-                    Title = "A gift",
-                    Description = "A gift description",
-                    Url = "http://www.GiftUrl.com"
-                }
+            Gift gift = new Gift
+            { 
+                Title = "A gift",
+                Description = "A gift description",
+                Url = "http://www.GiftUrl.com"
             };
 
             User user = new User
@@ -44,31 +42,32 @@ namespace SecretSanta.Data.Tests
             };
 
             //Act
-            user.Gifts = gift;
             user.UserGroups = new List<UserGroup>
             {
                 new UserGroup { User = user, Group = group1 },
                 new UserGroup { User = user, Group = group2 }
             };
+            gift.User = user;
 
             using (ApplicationDbContext dbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
-                dbContext.Users.Add(user);
+                dbContext.Gifts.Add(gift);
                 await dbContext.SaveChangesAsync();
             }
 
             //Assert
             using (ApplicationDbContext dbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
-                var retrievedUser = await dbContext.Users.Where(u => u.Id == user.Id)
-                    .Include(u => u.UserGroups)
-                    .ThenInclude(ug => ug.Group)
+                var retrievedGift = await dbContext.Gifts.Where(g => g.Id == gift.Id)
+                    .Include(u => u.User)
+                    .ThenInclude(ug => ug.UserGroups)
+                    .ThenInclude(gr => gr.Group)
                     .SingleOrDefaultAsync();
 
-                Assert.IsNotNull(retrievedUser);
-                Assert.AreEqual(2, retrievedUser.UserGroups.Count);
-                Assert.IsNotNull(retrievedUser.UserGroups[0].Group);
-                Assert.IsNotNull(retrievedUser.UserGroups[1].Group);
+                Assert.IsNotNull(retrievedGift);
+                Assert.AreEqual(2, retrievedGift.User.UserGroups.Count);
+                Assert.IsNotNull(retrievedGift.User.UserGroups[0].Group);
+                Assert.IsNotNull(retrievedGift.User.UserGroups[1].Group);
             }
         }
     }
