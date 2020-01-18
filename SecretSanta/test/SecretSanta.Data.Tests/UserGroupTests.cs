@@ -19,7 +19,7 @@ namespace SecretSanta.Data.Tests
             IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(hta => hta.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) == new Claim(ClaimTypes.NameIdentifier, "jdoe"));
 
             Gift gift = new Gift
-            { 
+            {
                 Title = "A gift",
                 Description = "A gift description",
                 Url = "http://www.GiftUrl.com"
