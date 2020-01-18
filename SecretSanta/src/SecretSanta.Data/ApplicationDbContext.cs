@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace SecretSanta.Data
 {
@@ -53,7 +54,18 @@ namespace SecretSanta.Data
 
         private void AddFingerPrinting()
         {
-            //TODO
+            var modified = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
+            var added = ChangeTracker.Entries().Where(e => e.State == EntityState.Added);
+
+            foreach (var entry in added)
+            {
+                //TODO
+            }
+
+            foreach(var entry in modified)
+            {
+                //TODO
+            }
         }
     }
 }
