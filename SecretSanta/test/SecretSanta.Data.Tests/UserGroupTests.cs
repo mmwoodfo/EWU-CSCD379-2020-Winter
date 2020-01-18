@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace SecretSanta.Data.Tests
 {
     [TestClass]
-    class UserGroupTests : TestBase
+    public class UserGroupTests : TestBase
     {
         [TestMethod]
         public async Task Create_UserWithManyGroups_Success()
@@ -20,11 +20,13 @@ namespace SecretSanta.Data.Tests
             // Arrange
             IHttpContextAccessor httpContextAccessor = Mock.Of<IHttpContextAccessor>(hta => hta.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier) == new Claim(ClaimTypes.NameIdentifier, "imontoya"));
 
-            Gift gift = new Gift
+            List<Gift> gift = new List<Gift>
             {
-                Title = "A gift",
-                Description = "A gift description",
-                Url = "http://www.GiftUrl.com"
+                new Gift{
+                    Title = "A gift",
+                    Description = "A gift description",
+                    Url = "http://www.GiftUrl.com"
+                }
             };
 
             User user = new User
@@ -44,6 +46,7 @@ namespace SecretSanta.Data.Tests
             };
 
             //Act
+            user.Gifts = gift;
             user.UserGroups = new List<UserGroup>
             {
                 new UserGroup { User = user, Group = group1 },
