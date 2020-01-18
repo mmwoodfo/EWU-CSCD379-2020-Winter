@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SecretSanta.Data
 {
@@ -69,7 +69,7 @@ namespace SecretSanta.Data
                 }
             }
 
-            foreach(var entry in modified)
+            foreach (var entry in modified)
             {
                 if (entry.Entity is FingerPrintEntityBase fingerPrintEntry)
                 {
