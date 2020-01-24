@@ -12,11 +12,11 @@ See [Assignment3.md](Assignment3.md)
 - Add a Status Badge (see [Add a status badge to your repository](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=browser%2Ctfs-2018-2#add-a-status-badge-to-your-repository)) to the `README.md` file in `master` that shows the build status on each branch. ✔
 - Be sure that clicking on the badge successfully navigates one to the Azure DevOps pipeline. ❌ (working on making it public)
 - Rebase to the Readme.md update on `master` to the `Assignment3` branch so it too shows the badge (be sure it points to the Assignment3 branch status) ✔
-- Appropriately encapsulate Id and all fingerprint data. ❌✔
+- Appropriately encapsulate Id and all fingerprint data. ✔
 - Add non-default constructors to Gift and address all warnings (see BlogEngine's Post.cs file). ✔
 - Add any missing entity framework CRUD unit tests for `Gift`. ❌✔
-- Implement an Automapper Configuration between two `Gift` objects. ❌✔
-  - Do not map the Id ❌✔
+- Implement an Automapper Configuration between two `Gift` objects. ✔
+  - Do not map the Id ✔
 - Create services for (do not map primary key Id for all entities):
   - Groups ❌✔
   - Users ❌✔
