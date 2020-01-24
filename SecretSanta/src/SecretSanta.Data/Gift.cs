@@ -17,23 +17,23 @@ namespace SecretSanta.Data
 #nullable enable
         public int UserId { get; set; }
 
-        public Gift(string title, string description, string url, User user) : this(title, description, url,
+        public Gift(string title, string url, string description, User user) : this(title, description, url,
 // Justification: There is no way to check for nullability with constructor chaining.
 #pragma warning disable CA1062 // Validate arguments of public methods          
             user.Id)
 #pragma warning restore CA1062 // Validate arguments of public methods
         {
             Title = title;
-            Description = description;
             Url = url;
+            Description = description;
             User = user;
         }
 
-        private Gift(string title, string description, string url, int userId)
+        private Gift(string title, string url, string description, int userId)
         {
             Title = title;
-            Description = description;
             Url = url;
+            Description = description;
             UserId = userId;
         }
     }

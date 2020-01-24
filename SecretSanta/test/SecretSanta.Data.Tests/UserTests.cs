@@ -132,8 +132,8 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
-                var gift1 = new Gift { Title = "Ring Doorbell", Url = "www.ring.com", Description = "Just a cool little toy so I can keep my amazon packages" };
-                var gift2 = new Gift { Title = "Arduino", Url = "www.arduino.com", Description = "Every good geek needs an IOT device" };
+                var gift1 = new Gift("Ring Doorbell", "www.ring.com", "Just a cool little toy so I can keep my amazon packages", new User("Inigo", "Montoya"));
+                var gift2 = new Gift("Arduino", "www.arduino.com", "Every good geek needs an IOT device", new User("Princess", "Buttercup"));
                 var user = new User("Inigo", "Montoya");
                 user.Gifts.Add(gift1);
                 user.Gifts.Add(gift2);
