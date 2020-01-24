@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace SecretSanta.Data
 {
     public class FingerPrintEntityBase : EntityBase
     {
-        public string CreatedBy { get; set; } = "";
+        [Required]
+        public string? CreatedBy { get; set; }
+        [Required]
         public DateTime CreatedOn { get; set; }
-        public string ModifiedBy { get; set; } = "";
+        [Required]
+        public string? ModifiedBy { get; set; }
+        [Required]
         public DateTime ModifiedOn { get; set; }
     }
 }
