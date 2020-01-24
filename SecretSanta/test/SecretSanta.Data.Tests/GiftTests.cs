@@ -10,12 +10,6 @@ namespace SecretSanta.Data.Tests
     public class GiftTests : TestBase
     {
         [TestMethod]
-        public async Task Fail()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
         public async Task Gift_CanBeSavedToDatabase()
         {
             // Arrange
