@@ -23,9 +23,6 @@ namespace SecretSanta.Data
             user.Id)
 #pragma warning restore CA1062 // Validate arguments of public methods
         {
-            Title = title;
-            Url = url;
-            Description = description;
             User = user;
         }
 
