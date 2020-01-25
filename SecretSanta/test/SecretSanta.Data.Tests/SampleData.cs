@@ -4,8 +4,22 @@ using System.Text;
 
 namespace SecretSanta.Data.Tests
 {
-    class SampleData
+    public static class SampleData
     {
+
+        //Gift Sample Data
+        public const string Ring = "Ring Doorbell";
+        public const string RingUrl = "www.ring.com";
+        public const string RingDescription = "The doorbell that saw too much";
+
+        public const string Arduino = "Arduino";
+        public const string ArduinoUrl = "www.arduino.com";
+        public const string ArduinoDescription = "Every good geek needs an IOT device";
+
+        static public Gift CreateRingGift() => new Gift(Ring, RingUrl, RingDescription, CreateJonDoe());
+        static public Gift CreateArduinoGift() => new Gift(Arduino, ArduinoUrl, ArduinoDescription, CreateBrandonFields());
+
+        //User Sample Data
         public const string River = "River";
         public const string Willis = "Willis";
         public const string RiverWillisAlias = "rwillis";
@@ -21,5 +35,10 @@ namespace SecretSanta.Data.Tests
         static public User CreateRiverWillis() => new User(River, Willis);
         static public User CreateBrandonFields() => new User(Brandon, Fields);
         static public User CreateJonDoe() => new User(Jon, Doe);
+
+        //Group Sample Data
+        public const string EnchantedForest = "Enchanted Forest";
+
+        static public Group CreateEnchantedForestGroup() => new Group(EnchantedForest);
     }
 }

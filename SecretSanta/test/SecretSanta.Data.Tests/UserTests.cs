@@ -108,7 +108,7 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
-                var group = new Group("Enchanted Forest");
+                var group = SampleData.CreateEnchantedForestGroup();
                 var user = SampleData.CreateJonDoe();
                 user.UserGroups.Add(new UserGroup { User = user, Group = group });
                 dbContext.Users.Add(user);
@@ -122,7 +122,7 @@ namespace SecretSanta.Data.Tests
 
                 Assert.AreEqual(1, users.Count);
                 Assert.AreEqual(1, users[0].UserGroups.Count);
-                Assert.AreEqual("Enchanted Forest", users[0].UserGroups[0].Group.Title);
+                Assert.AreEqual(SampleData.EnchantedForest, users[0].UserGroups[0].Group.Title);
             }
         }
 
@@ -135,8 +135,8 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options, httpContextAccessor))
             {
-                var gift1 = new Gift("Ring Doorbell", "www.ring.com", "Just a cool little toy so I can keep my amazon packages", SampleData.CreateBrandonFields());
-                var gift2 = new Gift("Arduino", "www.arduino.com", "Every good geek needs an IOT device", SampleData.CreateRiverWillis());
+                var gift1 = SampleData.CreateRingGift();
+                var gift2 = SampleData.CreateArduinoGift();
                 var user = SampleData.CreateJonDoe();
                 user.Gifts.Add(gift1);
                 user.Gifts.Add(gift2);
