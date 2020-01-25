@@ -18,10 +18,10 @@ See [Assignment3.md](Assignment3.md)
 - Implement an Automapper Configuration between two `Gift` objects. ✔
   - Do not map the Id ✔
 - Create services for (do not map primary key Id for all entities):
-  - Groups ❌✔
-  - Users ❌✔
-  - Gifts ❌✔
-  - When retrieving the Gift object from the service, User should be pre-populated (incuded) ❌✔
+  - Groups ✔
+  - Users ✔
+  - Gifts ✔
+  - When retrieving the Gift object from the service, User should be pre-populated (incuded) ✔
 - Refactor out SampleData (see BlogEngine's SampleData.cs) ✔
 
 ## Extra Credit
