@@ -10,7 +10,7 @@ See [Assignment3.md](Assignment3.md)
 
 - Connect Azure DevOps up for your fork.
 - Add a Status Badge (see [Add a status badge to your repository](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=browser%2Ctfs-2018-2#add-a-status-badge-to-your-repository)) to the `README.md` file in `master` that shows the build status on each branch. ✔
-- Be sure that clicking on the badge successfully navigates one to the Azure DevOps pipeline. ❌ (working on making it public)
+- Be sure that clicking on the badge successfully navigates one to the Azure DevOps pipeline. ✔ (Issue with it being anonymously accessable) 
 - Rebase to the Readme.md update on `master` to the `Assignment3` branch so it too shows the badge (be sure it points to the Assignment3 branch status) ✔
 - Appropriately encapsulate Id and all fingerprint data. ✔
 - Add non-default constructors to Gift and address all warnings (see BlogEngine's Post.cs file). ✔
