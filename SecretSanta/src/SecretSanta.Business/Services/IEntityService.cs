@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace SecretSanta.Business
 {
-    interface IEntityService<TEntity>
+    public interface IEntityService<TEntity>
     {
         Task<List<TEntity>> FetchAllAsync();
         Task<TEntity> FetchByIdAsync(int id);

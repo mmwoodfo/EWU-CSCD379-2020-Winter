@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Services
 {
-    class GroupService : EntityService<GroupService>
+    class GroupService : EntityService<Group>
     {
-
+        public GroupService(ApplicationDbContext dbContext, IMapper mapper) :
+            base(dbContext, mapper)
+        { }
     }
 }

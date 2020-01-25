@@ -10,8 +10,9 @@ namespace SecretSanta.Business.Services
 {
     class UserService : EntityService<User>
     {
-        public UserService(ApplicationDbContext context, IMapper mapper) :
-            base(context, mapper)
-        { }
+        public UserService(ApplicationDbContext dbContext, IMapper mapper) :
+            base(dbContext, mapper)
+        { }    
     }
 }
+

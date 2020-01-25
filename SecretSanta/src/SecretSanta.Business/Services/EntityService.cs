@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SecretSanta.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +8,52 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Services
 {
-    class EntityService<TEntity> : IEntityService<TEntity>
+    public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : EntityBase
     {
-        Task<bool> IEntityService<TEntity>.DeleteAsync(int id)
+        protected ApplicationDbContext ApplicationDbContext { get; }
+        protected IMapper Mapper { get; }
+        public EntityService(ApplicationDbContext applicationDbContext, IMapper mapper)
         {
-            throw new NotImplementedException();
+            ApplicationDbContext = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
+            Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            bool check = false;
+            TEntity entity = await FetchByIdAsync(id);
+           var recieved =ApplicationDbContext.Set<TEntity>().Remove(entity);
+            if (recieved.State == EntityState.Deleted) check = true;
+            await ApplicationDbContext.SaveChangesAsync();
+            return check;
         }
 
-        Task<List<TEntity>> IEntityService<TEntity>.FetchAllAsync()
+        public async Task<List<TEntity>> FetchAllAsync() =>
+            await ApplicationDbContext.Set<TEntity>().ToListAsync();
+
+        virtual public async Task<TEntity> FetchByIdAsync(int id) =>
+            await ApplicationDbContext.Set<TEntity>().SingleAsync(item => item.Id == id);
+
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await InsertAsync(new[] { entity });
+            return entity;
+        }
+        public async Task<TEntity[]> InsertAsync(params TEntity[] entities)
+        {
+            foreach (TEntity entity in entities)
+            {
+                ApplicationDbContext.Set<TEntity>().Add(entity);
+                await ApplicationDbContext.SaveChangesAsync();
+            }
+            return entities;
         }
 
-        Task<TEntity> IEntityService<TEntity>.FetchByIdAsync(int id)
+        public async Task<TEntity> UpdateAsync(int id, TEntity entity)
         {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IEntityService<TEntity>.InsertAsync(TEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity[]> IEntityService<TEntity>.InsertAsync(params TEntity[] entity)
-        {
-            throw new NotImplementedException();
+            TEntity result = await ApplicationDbContext.Set<TEntity>().SingleAsync(item => item.Id == id);
+            Mapper.Map(entity, result);
+            await ApplicationDbContext.SaveChangesAsync();
+            return result;
         }
     }
 }
