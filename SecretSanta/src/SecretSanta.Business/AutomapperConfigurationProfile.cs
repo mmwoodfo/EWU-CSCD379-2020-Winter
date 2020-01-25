@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using SecretSanta.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace SecretSanta.Business
 {
@@ -14,9 +10,9 @@ namespace SecretSanta.Business
         {
             CreateMap<Gift, Gift>().ForMember(property => property.Id, option => option.Ignore());
             CreateMap<User, User>().ForMember(property => property.Id, option => option.Ignore());//added for update to work for user tests
-        } 
-        
-        static public IMapper CreateMapper()
+        }
+
+        public static IMapper CreateMapper()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {

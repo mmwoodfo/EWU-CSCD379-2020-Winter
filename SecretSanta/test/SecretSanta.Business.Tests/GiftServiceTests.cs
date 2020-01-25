@@ -74,9 +74,9 @@ namespace SecretSanta.Business.Tests
             using var dbContext2 = new ApplicationDbContext(Options);
             service = new GiftService(dbContext, Mapper);
             bool success = await service.DeleteAsync(gift.Id);
-           
+
             Assert.IsTrue(success);
-            
+
             using var dbContext3 = new ApplicationDbContext(Options);
             service = new GiftService(dbContext, Mapper);
             gift = await service.FetchByIdAsync(gift.Id);//should throw 'Enumerator failed to MoveNextAsync' since it doesn't exist

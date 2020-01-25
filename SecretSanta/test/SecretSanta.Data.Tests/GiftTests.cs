@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SecretSanta.Data.Tests
@@ -42,7 +41,7 @@ namespace SecretSanta.Data.Tests
             }
 
             //Act & Assert
-            using(ApplicationDbContext dbContext = new ApplicationDbContext(Options))
+            using (ApplicationDbContext dbContext = new ApplicationDbContext(Options))
             {
                 var gifts = await dbContext.Gifts.Include(g => g.User).ToListAsync();
                 Assert.IsNotNull(gifts[0].CreatedBy);

@@ -17,15 +17,15 @@ namespace SecretSanta.Business.Tests
             IEntityService<Group> service = new GroupService(dbContextInsert, Mapper);
 
             var forest = SampleData.CreateEnchantedForestGroup();
-           
+
 
             // Act
             await service.InsertAsync(forest);
-            
+
 
             // Assert
             Assert.IsNotNull(forest.Id);
-            
+
         }
     }
 }

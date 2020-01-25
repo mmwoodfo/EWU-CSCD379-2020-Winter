@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SecretSanta.Data.Tests
+﻿namespace SecretSanta.Data.Tests
 {
     public static class SampleData
     {
@@ -16,8 +12,8 @@ namespace SecretSanta.Data.Tests
         public const string ArduinoUrl = "www.arduino.com";
         public const string ArduinoDescription = "Every good geek needs an IOT device";
 
-        static public Gift CreateRingGift() => new Gift(Ring, RingUrl, RingDescription, CreateJonDoe());
-        static public Gift CreateArduinoGift() => new Gift(Arduino, ArduinoUrl, ArduinoDescription, CreateBrandonFields());
+        public static Gift CreateRingGift() => new Gift(Ring, RingUrl, RingDescription, CreateJonDoe());
+        public static Gift CreateArduinoGift() => new Gift(Arduino, ArduinoUrl, ArduinoDescription, CreateBrandonFields());
 
         //User Sample Data
         public const string River = "River";
@@ -32,13 +28,13 @@ namespace SecretSanta.Data.Tests
         public const string Doe = "Doe";
         public const string JonDoeAlias = "jdoe";
 
-        static public User CreateRiverWillis() => new User(River, Willis);
-        static public User CreateBrandonFields() => new User(Brandon, Fields);
-        static public User CreateJonDoe() => new User(Jon, Doe);
+        public static User CreateRiverWillis() => new User(River, Willis);
+        public static User CreateBrandonFields() => new User(Brandon, Fields);
+        public static User CreateJonDoe() => new User(Jon, Doe);
 
         //Group Sample Data
         public const string EnchantedForest = "Enchanted Forest";
 
-        static public Group CreateEnchantedForestGroup() => new Group(EnchantedForest);
+        public static Group CreateEnchantedForestGroup() => new Group(EnchantedForest);
     }
 }

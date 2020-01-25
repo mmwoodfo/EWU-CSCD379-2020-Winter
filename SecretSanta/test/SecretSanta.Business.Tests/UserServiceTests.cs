@@ -3,9 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Business.Services;
 using SecretSanta.Data;
 using SecretSanta.Data.Tests;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Tests
@@ -69,6 +66,6 @@ namespace SecretSanta.Business.Tests
             Assert.AreEqual(
                 (SampleData.River, SampleData.Willis), (riverFromDb.FirstName, riverFromDb.LastName));
         }
-        
-    }   
+
+    }
 }

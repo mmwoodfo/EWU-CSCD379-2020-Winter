@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SecretSanta.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Services
@@ -21,7 +20,7 @@ namespace SecretSanta.Business.Services
         {
             bool check = false;
             TEntity entity = await FetchByIdAsync(id);
-           var recieved =ApplicationDbContext.Set<TEntity>().Remove(entity);
+            var recieved = ApplicationDbContext.Set<TEntity>().Remove(entity);
             if (recieved.State == EntityState.Deleted) check = true;
             await ApplicationDbContext.SaveChangesAsync();
             return check;
@@ -30,7 +29,7 @@ namespace SecretSanta.Business.Services
         public async Task<List<TEntity>> FetchAllAsync() =>
             await ApplicationDbContext.Set<TEntity>().ToListAsync();
 
-        virtual public async Task<TEntity> FetchByIdAsync(int id) =>
+        public virtual async Task<TEntity> FetchByIdAsync(int id) =>
             await ApplicationDbContext.Set<TEntity>().SingleAsync(item => item.Id == id);
 
         public async Task<TEntity> InsertAsync(TEntity entity)

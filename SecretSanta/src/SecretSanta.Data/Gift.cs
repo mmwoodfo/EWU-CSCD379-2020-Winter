@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SecretSanta.Data
 {
@@ -18,7 +16,7 @@ namespace SecretSanta.Data
         public int UserId { get; set; }
 
         public Gift(string title, string url, string description, User user) : this(title, url, description,
-// Justification: There is no way to check for nullability with constructor chaining.
+            // Justification: There is no way to check for nullability with constructor chaining.
 #pragma warning disable CA1062 // Validate arguments of public methods          
             user.Id)
 #pragma warning restore CA1062 // Validate arguments of public methods
