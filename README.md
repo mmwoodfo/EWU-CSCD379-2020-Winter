@@ -22,7 +22,7 @@ See [Assignment3.md](Assignment3.md)
   - Users ❌✔
   - Gifts ❌✔
   - When retrieving the Gift object from the service, User should be pre-populated (incuded) ❌✔
-- Refactor out SampleData (see BlogEngine's SampleData.cs) ❌✔
+- Refactor out SampleData (see BlogEngine's SampleData.cs) ✔
 
 ## Extra Credit
 
