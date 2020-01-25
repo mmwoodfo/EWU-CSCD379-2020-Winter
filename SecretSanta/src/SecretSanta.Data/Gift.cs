@@ -17,7 +17,7 @@ namespace SecretSanta.Data
 #nullable enable
         public int UserId { get; set; }
 
-        public Gift(string title, string url, string description, User user) : this(title, description, url,
+        public Gift(string title, string url, string description, User user) : this(title, url, description,
 // Justification: There is no way to check for nullability with constructor chaining.
 #pragma warning disable CA1062 // Validate arguments of public methods          
             user.Id)
