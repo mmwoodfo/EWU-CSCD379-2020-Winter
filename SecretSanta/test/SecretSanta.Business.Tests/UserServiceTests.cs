@@ -56,7 +56,7 @@ namespace SecretSanta.Business.Tests
             riverFromDb.LastName = Shenandoah;
 
             // Update Inigo Montoya using the princesses Id.
-            await service.UpdateAsync(2, riverFromDb);
+            await service.UpdateAsync(brandon.Id, riverFromDb);
 
             // Assert
             using var dbContextAssert = new ApplicationDbContext(Options);

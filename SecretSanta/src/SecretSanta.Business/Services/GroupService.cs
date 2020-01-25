@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Services
 {
-    class GroupService : EntityService<Group>
+    public class GroupService : EntityService<Group>, IEntityService<Group>
     {
         public GroupService(ApplicationDbContext dbContext, IMapper mapper) :
             base(dbContext, mapper)

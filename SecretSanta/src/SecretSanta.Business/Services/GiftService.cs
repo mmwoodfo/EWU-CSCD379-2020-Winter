@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Business.Services
 {
-    class GiftService : EntityService<Gift>
+    public class GiftService : EntityService<Gift>, IEntityService<Gift>
     {
         public GiftService(ApplicationDbContext dbContext, IMapper mapper) :
             base(dbContext, mapper)
