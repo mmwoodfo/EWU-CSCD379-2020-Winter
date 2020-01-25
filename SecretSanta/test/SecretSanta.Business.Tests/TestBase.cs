@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
-using SecretSanta.Data;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
-using System.Reflection;
+
 
 
 namespace SecretSanta.Business.Tests
 {
-    public class TestBase : SecretSanta.Data.Tests.TestBase
+    public class TestBase : Data.Tests.TestBase
     {
         // Justification: Set by TestInitialize
 #nullable disable // CS8618: Non-nullable field is uninitialized. Consider declaring as nullable.
@@ -20,10 +13,10 @@ namespace SecretSanta.Business.Tests
 #nullable enable
 
         [TestInitialize]
-        public override void TestInitialize()
+        public override void InitializeTests()
         {
-            base.TestInitialize();
-            Mapper = AutomapperProfileConfiguration.CreateMapper();
+            base.InitializeTests();
+            Mapper = AutomapperConfigurationProfile.CreateMapper();
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecretSanta.Business.Services;
 using SecretSanta.Data;
+using SecretSanta.Data.Tests;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,56 +13,62 @@ namespace SecretSanta.Business.Tests
     [TestClass]
     public class UserServiceTests : TestBase
     {
-       /* [TestMethod]
-        public async Task InsertAsync_InigoAndPrincess_Success()
+        [TestMethod]
+        public async Task InsertAsync_Success()
         {
             // Arrange
             using var dbContextInsert = new ApplicationDbContext(Options);
-            IUserService service = new UserService(dbContextInsert, Mapper);
+            IEntityService<User> service = new UserService(dbContextInsert, Mapper);
 
-            var inigo = SampleData.CreateInigoMontoya();
+            var river = SampleData.CreateRiverWillis();
+            var brandon = SampleData.CreateBrandonFields();
+            var jon = SampleData.CreateJonDoe();
 
             // Act
-            await service.InsertAsync(inigo);
+            await service.InsertAsync(river);
+            await service.InsertAsync(brandon);
+            await service.InsertAsync(jon);
 
             // Assert
-            Assert.IsNotNull(inigo.Id);
+            Assert.IsNotNull(river.Id);
+            Assert.IsNotNull(brandon.Id);
+            Assert.IsNotNull(jon.Id);
         }
 
         [TestMethod]
-        public async Task UpdateAuthor_ShouldSaveIntoDatabase()
+        public async Task UpdateUser_ShouldSaveIntoDatabase()
         {
             // Arrange
             using var dbContextInsert = new ApplicationDbContext(Options);
-            IUserService service = new UserService(dbContextInsert, Mapper);
+            IEntityService<User> service = new UserService(dbContextInsert, Mapper);
 
-            var inigo = SampleData.CreateInigoMontoya();
-            var princess = SampleData.CreatePrincessButtercup();
+            var river = SampleData.CreateRiverWillis();
+            var brandon = SampleData.CreateBrandonFields();
 
-            await service.InsertAsync(inigo);
-            await service.InsertAsync(princess);
+            await service.InsertAsync(river);
+            await service.InsertAsync(brandon);
 
             // Act
             using var dbContextFetch = new ApplicationDbContext(Options);
-            Author inigoFromDb = await dbContextFetch.Authors.SingleAsync(item => item.Id == inigo.Id);
+            User riverFromDb = await dbContextFetch.Users.SingleAsync(item => item.Id == river.Id);
 
-            const string montoyaThe3rd = "Montoya The 3rd";
-            inigoFromDb.LastName = montoyaThe3rd;
+            const string Shenandoah = "Shenandoah";
+            riverFromDb.LastName = Shenandoah;
 
             // Update Inigo Montoya using the princesses Id.
-            await service.UpdateAsync(princess.Id!.Value, inigoFromDb);
+            await service.UpdateAsync(2, riverFromDb);
 
             // Assert
             using var dbContextAssert = new ApplicationDbContext(Options);
-            inigoFromDb = await dbContextAssert.Authors.SingleAsync(item => item.Id == inigo.Id);
-            var princessFromDb = await dbContextAssert.Authors.SingleAsync(item => item.Id == 2);
+            riverFromDb = await dbContextAssert.Users.SingleAsync(item => item.Id == river.Id);
+            var brandonFromDb = await dbContextAssert.Users.SingleAsync(item => item.Id == 2);
 
             Assert.AreEqual(
-                (SampleData.Inigo, montoyaThe3rd), (princessFromDb.FirstName, princessFromDb.LastName));
+                (SampleData.River, Shenandoah), (brandonFromDb.FirstName, brandonFromDb.LastName));
 
             Assert.AreEqual(
-                (SampleData.Inigo, SampleData.Montoya), (inigoFromDb.FirstName, inigoFromDb.LastName));
+                (SampleData.River, SampleData.Willis), (riverFromDb.FirstName, riverFromDb.LastName));
         }
-        */
-    }
+        
+    }   
 }

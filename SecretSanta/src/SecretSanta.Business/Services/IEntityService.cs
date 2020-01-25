@@ -10,6 +10,7 @@ namespace SecretSanta.Business
         Task<TEntity> FetchByIdAsync(int id);
         Task<TEntity> InsertAsync(TEntity entity);
         Task<TEntity[]> InsertAsync(params TEntity[] entity);
+        Task<TEntity> UpdateAsync(int id, TEntity entity);
         Task<bool> DeleteAsync(int id);
     }
 }
