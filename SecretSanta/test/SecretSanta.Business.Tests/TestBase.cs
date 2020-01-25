@@ -8,10 +8,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Reflection;
-using SecretSanta.Data.Tests;
 
 
-namespace BlogEngine.Business.Tests
+namespace SecretSanta.Business.Tests
 {
     public class TestBase : SecretSanta.Data.Tests.TestBase
     {
