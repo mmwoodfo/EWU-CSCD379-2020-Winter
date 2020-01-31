@@ -16,7 +16,7 @@ namespace SecretSanta.Api.Tests.Controllers
     {
         protected override User CreateInstance()
         {
-            return new User("Buzz","Lightyear");
+            return SampleData.CreateJonDoe();
         }
     }
     public class TestableUserSerivce : EntityService<User>

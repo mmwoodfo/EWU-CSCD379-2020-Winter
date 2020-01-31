@@ -8,17 +8,22 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using SecretSanta.Business.Services;
+using System.Linq;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
-    public abstract class EntityControllerTest<TEntity> : TestBase<TEntity> where TEntity : EntityBase
+    public abstract class EntityControllerTest<TEntity> where TEntity : EntityBase
     {
+        protected abstract TEntity CreateInstance();
+
         [TestMethod]
         public void Create_EntityController_Success()
         {
             //Arrange
-            
+            //var service = new EntityService<TEntity>();
+
             //Act & Assert
+            _ = new EntityController<TEntity>(null!/*service*/);
         }
 
         [TestMethod]
@@ -33,34 +38,49 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetAll_WithExistingEntitys_Success()
         {
             //Arrange
+            //var service = new EntityService<TEntity>();
+            TEntity entity = CreateInstance();
+            //await service.InsertAsync(entity);
 
+            var controller = new EntityController<TEntity>(null!/*service*/);
 
             //Act
-
+            IEnumerable<TEntity> entities = await controller.Get();
 
             //Assert
+            Assert.AreEqual(1, entities.ToList().Count);
         }
 
         [TestMethod]
         public async Task GetById_WithExistingEntity_Success()
         {
             //Arrange
+            //var service = new EntityService<TEntity>();
+            TEntity entity = CreateInstance();
+            //entity = await service.InsertAsync(entity);
+
+            var controller = new EntityController<TEntity>(null!/*service*/);
 
             //Act
+            ActionResult<TEntity> rv = await controller.Get(0/*entity.Id*/);
 
             //Assert
-
+            Assert.IsTrue(rv.Result is OkObjectResult);
         }
 
         [TestMethod]
         public async Task GetById_WithExistingEntity_404Error()
         {
             //Arrange
+            //var service = new EntityService<TEntity>();
+
+            var controller = new EntityController<TEntity>(null!/*service*/);
 
             //Act
+            ActionResult<TEntity> rv = await controller.Get(0);
 
             //Assert
-
+            Assert.IsTrue(rv.Result is NotFoundResult);
         }
 
         [TestMethod]
@@ -102,7 +122,7 @@ namespace SecretSanta.Api.Tests.Controllers
        
     }
 
-    public abstract class EntityService<TEntity> where TEntity : EntityBase
+    public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
     {
         private Dictionary<int, TEntity> Items { get; } = new Dictionary<int, TEntity>();
         protected abstract TEntity CreateWithId(TEntity entity, int id);
@@ -148,14 +168,4 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
     }
-    
-
-    //public class TestEntity : TEntity
-    //{
-    //    public TestEntity(TEntity Entity, int id)
-    //        : base(TEntity.FirstName, Entity.LastName)
-    //    {
-    //        Id = id;
-    //    }
-    //}
 }

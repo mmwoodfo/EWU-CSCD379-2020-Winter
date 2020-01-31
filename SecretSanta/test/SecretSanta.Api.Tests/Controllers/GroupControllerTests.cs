@@ -17,7 +17,7 @@ namespace SecretSanta.Api.Tests.Controllers
     {
         protected override Group CreateInstance()
         {
-            return new Group("Cooking");
+            return SampleData.CreateEnchantedForestGroup();
         }
     }
     public class TestableGroupSerivce : EntityService<Group>
