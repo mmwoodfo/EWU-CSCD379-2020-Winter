@@ -87,12 +87,16 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Create_Post_Success()
         {
             //Arrange
+            var service = new EntityService<TEntity>();
+            TEntity entity = CreateInstance();
 
+            var controller = new EntityController<TEntity>(service);
 
             //Act
-
+            ActionResult<TEntity> rv = await controller.Post(entity);
 
             //Assert
+            Assert.IsTrue(rv.Value != null);
         }
 
         [TestMethod]
@@ -137,7 +141,8 @@ namespace SecretSanta.Api.Tests.Controllers
 
         public Task<List<TEntity>> FetchAllAsync()
         {
-            throw new NotImplementedException();
+            var items = Items.Values.ToList();
+            return Task.FromResult(items);
         }
 
         public Task<TEntity?> FetchByIdAsync(int id)
@@ -157,7 +162,6 @@ namespace SecretSanta.Api.Tests.Controllers
             int id = Items.Count + 1;
             Items[id] = CreateWithId(entity, id);
             return Task.FromResult(Items[id]);
-            throw new NotImplementedException();
         }
 
         public Task<TEntity[]> InsertAsync(params TEntity[] entity)

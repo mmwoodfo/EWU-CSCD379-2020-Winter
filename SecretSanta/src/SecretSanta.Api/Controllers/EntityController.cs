@@ -46,7 +46,6 @@ namespace SecretSanta.Api.Controllers
         [HttpPost]
         public async Task<TEntity> Post(TEntity value)
         {
-            
             return await EntityService.InsertAsync(value);
         }
 
