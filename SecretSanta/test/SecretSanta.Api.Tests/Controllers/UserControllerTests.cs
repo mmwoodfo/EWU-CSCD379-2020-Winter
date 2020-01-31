@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Data;
 using SecretSanta.Data.Tests;
+using System;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
@@ -27,7 +28,7 @@ namespace SecretSanta.Api.Tests.Controllers
     public class TestUser : User
     {
         public TestUser(User entity, int id)
-            : base(entity.FirstName, entity.LastName)
+            : base(entity?.FirstName ?? throw new ArgumentNullException(nameof(entity)), entity.LastName)
         {
             Id = id;
         }

@@ -42,7 +42,6 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetAll_WithExistingEntitys_Success()
         {
             //Arrange
-            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
             await Service.InsertAsync(entity);
 
@@ -76,8 +75,6 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_404Error()
         {
             //Arrange
-            // var service = new EntityService<TEntity>();
-
             var controller = new EntityController<TEntity>(Service);
 
             //Act
@@ -91,7 +88,6 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Create_Post_Success()
         {
             //Arrange
-            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
 
             var controller = new EntityController<TEntity>(Service);
@@ -107,7 +103,6 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Update_Entity_Success()
         {
             //Arrange
-            // var service = new EntityService<TEntity>();
             TEntity entity1 = CreateInstance();
             TEntity entity2 = CreateInstance();
 
@@ -126,7 +121,6 @@ namespace SecretSanta.Api.Tests.Controllers
         [TestMethod]
         public async Task Delete_EntityWithId_Success()
         {
-            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
             entity = await Service.InsertAsync(entity);
             var controller = new EntityController<TEntity>(Service);

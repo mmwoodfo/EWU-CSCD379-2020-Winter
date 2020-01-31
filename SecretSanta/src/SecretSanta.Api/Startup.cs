@@ -20,13 +20,15 @@ namespace SecretSanta.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public static void ConfigureServices(IServiceCollection services)
         {
-            var SqliteConnection = new SqliteConnection("DataSource=:memory:");
-            SqliteConnection.Open();
-            services.AddDbContext<ApplicationDbContext>(options =>
+            using (var SqliteConnection = new SqliteConnection("DataSource=:memory:"))
             {
-                options.EnableSensitiveDataLogging()
-                    .UseSqlite(SqliteConnection);
-            });
+                SqliteConnection.Open();
+                services.AddDbContext<ApplicationDbContext>(options =>
+                {
+                    options.EnableSensitiveDataLogging()
+                        .UseSqlite(SqliteConnection);
+                });
+            }
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGiftService, GiftService>();

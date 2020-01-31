@@ -60,7 +60,7 @@ namespace SecretSanta.Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TEntity>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             if (await EntityService.DeleteAsync(id) is true)
             {
