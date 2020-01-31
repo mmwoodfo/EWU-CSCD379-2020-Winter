@@ -20,10 +20,10 @@ namespace SecretSanta.Api.Tests.Controllers
         public void Create_EntityController_Success()
         {
             //Arrange
-            //var service = new EntityService<TEntity>();
+            var service = new EntityService<TEntity>();
 
             //Act & Assert
-            _ = new EntityController<TEntity>(null!/*service*/);
+            _ = new EntityController<TEntity>(service);
         }
 
         [TestMethod]
@@ -38,11 +38,11 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetAll_WithExistingEntitys_Success()
         {
             //Arrange
-            //var service = new EntityService<TEntity>();
+            var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
-            //await service.InsertAsync(entity);
+            await service.InsertAsync(entity);
 
-            var controller = new EntityController<TEntity>(null!/*service*/);
+            var controller = new EntityController<TEntity>(service);
 
             //Act
             IEnumerable<TEntity> entities = await controller.Get();
@@ -55,14 +55,14 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_Success()
         {
             //Arrange
-            //var service = new EntityService<TEntity>();
+            var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
-            //entity = await service.InsertAsync(entity);
+            entity = await service.InsertAsync(entity);
 
-            var controller = new EntityController<TEntity>(null!/*service*/);
+            var controller = new EntityController<TEntity>(service);
 
             //Act
-            ActionResult<TEntity> rv = await controller.Get(0/*entity.Id*/);
+            ActionResult<TEntity> rv = await controller.Get(entity.Id);
 
             //Assert
             Assert.IsTrue(rv.Result is OkObjectResult);
@@ -72,9 +72,9 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_404Error()
         {
             //Arrange
-            //var service = new EntityService<TEntity>();
+            var service = new EntityService<TEntity>();
 
-            var controller = new EntityController<TEntity>(null!/*service*/);
+            var controller = new EntityController<TEntity>(service);
 
             //Act
             ActionResult<TEntity> rv = await controller.Get(0);
@@ -122,10 +122,13 @@ namespace SecretSanta.Api.Tests.Controllers
        
     }
 
-    public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
+    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
     {
         private Dictionary<int, TEntity> Items { get; } = new Dictionary<int, TEntity>();
-        protected abstract TEntity CreateWithId(TEntity entity, int id);
+        protected virtual TEntity CreateWithId(TEntity entity, int id)
+        {
+            return entity;//should never run
+        }
 
         public Task<bool> DeleteAsync(int id)
         {
