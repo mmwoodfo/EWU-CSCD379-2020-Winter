@@ -1,29 +1,33 @@
-﻿using SecretSanta.Api.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecretSanta.Api.Controllers;
 using SecretSanta.Business;
 using SecretSanta.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using SecretSanta.Business.Services;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
     public abstract class EntityControllerTest<TEntity> where TEntity : EntityBase
     {
         protected abstract TEntity CreateInstance();
+        private EntityService<TEntity> Service { get; }
+
+        public EntityControllerTest(EntityService<TEntity> entityService)
+        {
+            Service = entityService ?? throw new ArgumentNullException(nameof(entityService));
+        }
 
         [TestMethod]
         public void Create_EntityController_Success()
         {
             //Arrange
-            var service = new EntityService<TEntity>();
+            //var service = new EntityService<TEntity>();
 
             //Act & Assert
-            _ = new EntityController<TEntity>(service);
+            _ = new EntityController<TEntity>(Service);
         }
 
         [TestMethod]
@@ -38,11 +42,11 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetAll_WithExistingEntitys_Success()
         {
             //Arrange
-            var service = new EntityService<TEntity>();
+            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
-            await service.InsertAsync(entity);
+            await Service.InsertAsync(entity);
 
-            var controller = new EntityController<TEntity>(service);
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
             IEnumerable<TEntity> entities = await controller.Get();
@@ -55,11 +59,11 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_Success()
         {
             //Arrange
-            var service = new EntityService<TEntity>();
+            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
-            entity = await service.InsertAsync(entity);
+            entity = await Service.InsertAsync(entity);
 
-            var controller = new EntityController<TEntity>(service);
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
             ActionResult<TEntity> rv = await controller.Get(entity.Id);
@@ -72,9 +76,9 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_404Error()
         {
             //Arrange
-            var service = new EntityService<TEntity>();
+            // var service = new EntityService<TEntity>();
 
-            var controller = new EntityController<TEntity>(service);
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
             ActionResult<TEntity> rv = await controller.Get(0);
@@ -87,10 +91,10 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Create_Post_Success()
         {
             //Arrange
-            var service = new EntityService<TEntity>();
+            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
 
-            var controller = new EntityController<TEntity>(service);
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
             ActionResult<TEntity> rv = await controller.Post(entity);
@@ -103,40 +107,47 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Update_Entity_Success()
         {
             //Arrange
+            // var service = new EntityService<TEntity>();
+            TEntity entity1 = CreateInstance();
+            TEntity entity2 = CreateInstance();
 
+            entity1 = await Service.InsertAsync(entity1);
+            entity2 = await Service.InsertAsync(entity2);
+
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
-
+            ActionResult<TEntity> rv = await controller.Put(entity1.Id, entity2);
 
             //Assert
+            Assert.AreEqual(entity2.Id, rv.Value.Id);
         }
 
         [TestMethod]
         public async Task Delete_EntityWithId_Success()
         {
-            //Arrange
-
+            // var service = new EntityService<TEntity>();
+            TEntity entity = CreateInstance();
+            entity = await Service.InsertAsync(entity);
+            var controller = new EntityController<TEntity>(Service);
 
             //Act
-
+            ActionResult<TEntity> rv = await controller.Delete(entity.Id);
 
             //Assert
+            Assert.IsTrue(rv.Result is OkObjectResult);
         }
 
-       
     }
 
-    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
+    public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
     {
         private Dictionary<int, TEntity> Items { get; } = new Dictionary<int, TEntity>();
-        protected virtual TEntity CreateWithId(TEntity entity, int id)
-        {
-            return entity;//should never run
-        }
+        protected abstract TEntity CreateWithId(TEntity entity, int id);
 
         public Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Items.Remove(id));
         }
 
         public Task<List<TEntity>> FetchAllAsync()
@@ -158,7 +169,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
         public Task<TEntity> InsertAsync(TEntity entity)
         {
-            
+
             int id = Items.Count + 1;
             Items[id] = CreateWithId(entity, id);
             return Task.FromResult(Items[id]);
@@ -171,7 +182,8 @@ namespace SecretSanta.Api.Tests.Controllers
 
         public Task<TEntity?> UpdateAsync(int id, TEntity entity)
         {
-            throw new NotImplementedException();
+            Items[id] = entity;
+            return Task.FromResult<TEntity?>(entity);
         }
 
     }

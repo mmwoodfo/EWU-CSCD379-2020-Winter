@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SecretSanta.Api.Controllers;
 using SecretSanta.Data;
 using System;
 
@@ -13,7 +12,7 @@ namespace SecretSanta.Api
         {
             //CreateHostBuilder(args).Build().Run();
             IHost host = CreateHostBuilder(args).Build();
-            
+
 
             using (var scope = host.Services.CreateScope())
             {

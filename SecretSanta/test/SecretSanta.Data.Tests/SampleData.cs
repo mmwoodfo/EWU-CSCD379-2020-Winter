@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SecretSanta.Data.Tests
+﻿namespace SecretSanta.Data.Tests
 {
     public static class SampleData
     {

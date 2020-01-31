@@ -1,6 +1,5 @@
-﻿using SecretSanta.Data;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SecretSanta.Business.Services;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecretSanta.Data;
 using SecretSanta.Data.Tests;
 
 namespace SecretSanta.Api.Tests.Controllers
@@ -8,6 +7,10 @@ namespace SecretSanta.Api.Tests.Controllers
     [TestClass]
     public class GiftControllerTests : EntityControllerTest<Gift>
     {
+        public GiftControllerTests() : base(new TestableGiftSerivce())
+        {
+
+        }
         protected override Gift CreateInstance()
         {
             return SampleData.CreateArduinoGift();
@@ -18,7 +21,7 @@ namespace SecretSanta.Api.Tests.Controllers
     {
         protected override Gift CreateWithId(Gift entity, int id)
         {
-            return new TestGift(entity, id);  
+            return new TestGift(entity, id);
         }
     }
     public class TestGift : Gift

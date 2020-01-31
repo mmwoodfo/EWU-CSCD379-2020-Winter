@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SecretSanta.Business;
-using SecretSanta.Business.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SecretSanta.Api.Controllers
 {
@@ -51,9 +49,9 @@ namespace SecretSanta.Api.Controllers
 
         // PUT: api/Entity/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<TEntity>> Put(int id,TEntity value)
+        public async Task<ActionResult<TEntity>> Put(int id, TEntity value)
         {
-            if(await EntityService.UpdateAsync(id,value) is TEntity entity)
+            if (await EntityService.UpdateAsync(id, value) is TEntity entity)
             {
                 return entity;
             }
@@ -64,9 +62,9 @@ namespace SecretSanta.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<TEntity>> Delete(int id)
         {
-            if(await EntityService.DeleteAsync(id) is TEntity entity)
+            if (await EntityService.DeleteAsync(id) is true)
             {
-                return entity;
+                return Ok(true);
             }
             return NotFound();
         }

@@ -10,9 +10,9 @@ namespace SecretSanta.Business.Services
     public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : EntityBase
     {
         protected ApplicationDbContext DbContext { get; }
-        
+
         protected IMapper Mapper { get; }
-        
+
         public EntityService(ApplicationDbContext dbContext, IMapper mapper)
         {
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
