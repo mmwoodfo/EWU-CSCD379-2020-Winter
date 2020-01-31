@@ -5,8 +5,8 @@ using System.Text;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
-    public abstract class TestBase
+    public abstract class TestBase<TEntity>
     {
-
+       protected abstract TEntity CreateInstance();
     }
 }

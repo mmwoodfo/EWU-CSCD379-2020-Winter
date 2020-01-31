@@ -1,7 +1,6 @@
 ﻿using SecretSanta.Api.Controllers;
 using SecretSanta.Business;
 using SecretSanta.Data;
-using SecretSanta.Data.Tests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,7 +11,7 @@ using SecretSanta.Business.Services;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
-    public class EntityControllerTest<TEntity> : TestBase where TEntity : EntityBase
+    public abstract class EntityControllerTest<TEntity> : TestBase<TEntity> where TEntity : EntityBase
     {
         [TestMethod]
         public void Create_EntityController_Success()
@@ -98,11 +97,14 @@ namespace SecretSanta.Api.Tests.Controllers
 
             //Assert
         }
+
+       
     }
 
-    public class EntityService<TEntity> : TestBase where TEntity : EntityBase
+    public abstract class EntityService<TEntity> where TEntity : EntityBase
     {
         private Dictionary<int, TEntity> Items { get; } = new Dictionary<int, TEntity>();
+        protected abstract TEntity CreateWithId(TEntity entity, int id);
 
         public Task<bool> DeleteAsync(int id)
         {
@@ -127,9 +129,10 @@ namespace SecretSanta.Api.Tests.Controllers
 
         public Task<TEntity> InsertAsync(TEntity entity)
         {
-            //int id = Items.Count + 1;
-            //Items[id] = new TestEntity(entity, id);
-            //return Task.FromResult(Items[id]);
+            
+            int id = Items.Count + 1;
+            Items[id] = CreateWithId(entity, id);
+            return Task.FromResult(Items[id]);
             throw new NotImplementedException();
         }
 
@@ -142,7 +145,9 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             throw new NotImplementedException();
         }
+
     }
+    
 
     //public class TestEntity : TEntity
     //{

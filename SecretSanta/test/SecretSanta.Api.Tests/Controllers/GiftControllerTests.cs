@@ -1,13 +1,5 @@
-﻿using SecretSanta.Api.Controllers;
-using SecretSanta.Data;
-using SecretSanta.Data.Tests;
-using Microsoft.AspNetCore.Mvc;
+﻿using SecretSanta.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using SecretSanta.Business;
 
 
 namespace SecretSanta.Api.Tests.Controllers
@@ -15,6 +7,25 @@ namespace SecretSanta.Api.Tests.Controllers
     [TestClass]
     public class GiftControllerTests : EntityControllerTest<Gift>
     {
-       
+        protected override Gift CreateInstance()
+        {
+            return new Gift();
+        }
+    }
+    public class TestableGiftSerivce : EntityService<Gift>
+    {
+        protected override Gift CreateWithId(Gift entity, int id)
+        {
+            return new TestGift(entity, id);
+            
+        }
+    }
+    public class TestGift : Gift
+    {
+        public TestGift(Gift entity, int id)
+            : base(entity.Title, entity.Url, entity.Description, entity.User)
+        {
+            Id = id;
+        }
     }
 }

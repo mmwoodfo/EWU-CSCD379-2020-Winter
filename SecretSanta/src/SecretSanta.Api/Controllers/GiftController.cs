@@ -13,7 +13,7 @@ namespace SecretSanta.Api.Controllers
     [ApiController]
     public class GiftController : EntityController<Gift>
     {
-        public GiftController(IEntityService<Gift> entityService) : base(entityService)
+        public GiftController(IGiftService entityService) : base(entityService)
         {
         }
     }

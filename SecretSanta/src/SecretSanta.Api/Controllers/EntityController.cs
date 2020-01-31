@@ -44,16 +44,21 @@ namespace SecretSanta.Api.Controllers
 
         // POST: api/TEntity
         [HttpPost]
-        public void Post([FromBody] TEntity value)
+        public async Task<TEntity> Post(TEntity value)
         {
-            //TODO
+            
+            return await EntityService.InsertAsync(value);
         }
 
         // PUT: api/TEntity/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] TEntity value)
+        public async Task<ActionResult<TEntity>> Put(int id,TEntity value)
         {
-            //TODO
+            if(await EntityService.UpdateAsync(id,value) is TEntity T)
+            {
+                return T;
+            }
+            return NotFound();
         }
 
         // DELETE: api/ApiWithActions/5

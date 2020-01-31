@@ -13,7 +13,7 @@ namespace SecretSanta.Api.Controllers
     [ApiController]
     public class UserController : EntityController<User>
     {
-        public UserController(IEntityService<User> entityService) : base(entityService)
+        public UserController(IUserService entityService) : base(entityService)
         {
         }
     }

@@ -13,7 +13,7 @@ namespace SecretSanta.Api.Controllers
     [ApiController]
     public class GroupController : EntityController<Group>
     {
-        public GroupController(IEntityService<Group> entityService) : base(entityService)
+        public GroupController(IGroupService entityService) : base(entityService)
         {
         }
     }
