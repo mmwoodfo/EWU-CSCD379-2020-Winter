@@ -36,4 +36,4 @@ namespace SecretSanta.Api.Tests.Controllers
         }
     }
 }
-}
+

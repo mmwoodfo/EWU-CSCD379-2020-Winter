@@ -17,15 +17,16 @@ namespace SecretSanta.Api.Tests.Controllers
         public void Create_EntityController_Success()
         {
             //Arrange
-
+            
             //Act & Assert
         }
 
         [TestMethod]
-        //[ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void Create_WithoutService_ThrowException()
         {
             //Arrange, Act & Assert
+            _ = new EntityController<TEntity>(null!);
         }
 
         [TestMethod]
@@ -63,7 +64,7 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public void Create_Post_Success()
+        public async Task Create_Post_Success()
         {
             //Arrange
 
@@ -75,7 +76,7 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public void Update_Entity_Success()
+        public async Task Update_Entity_Success()
         {
             //Arrange
 
@@ -87,7 +88,7 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public void Delete_EntityWithId_Success()
+        public async Task Delete_EntityWithId_Success()
         {
             //Arrange
 

@@ -11,7 +11,7 @@ namespace SecretSanta.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EntityController<TEntity> : Controller where TEntity : class
+    public class EntityController<TEntity> : ControllerBase where TEntity : class
     {
 
         private IEntityService<TEntity> EntityService { get; }
@@ -21,7 +21,7 @@ namespace SecretSanta.Api.Controllers
             EntityService = entityService ?? throw new ArgumentNullException(nameof(entityService));
         }
 
-        // GET: api/TEntity
+        // GET: api/Entity
         [HttpGet]
         public async Task<IEnumerable<TEntity>> Get()
         {
@@ -29,7 +29,7 @@ namespace SecretSanta.Api.Controllers
             return entities;
         }
 
-        // GET: api/TEntity/5
+        // GET: api/Entity/5
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,7 +42,7 @@ namespace SecretSanta.Api.Controllers
             return NotFound();
         }
 
-        // POST: api/TEntity
+        // POST: api/Entity
         [HttpPost]
         public async Task<TEntity> Post(TEntity value)
         {
@@ -50,22 +50,26 @@ namespace SecretSanta.Api.Controllers
             return await EntityService.InsertAsync(value);
         }
 
-        // PUT: api/TEntity/5
+        // PUT: api/Entity/5
         [HttpPut("{id}")]
         public async Task<ActionResult<TEntity>> Put(int id,TEntity value)
         {
-            if(await EntityService.UpdateAsync(id,value) is TEntity T)
+            if(await EntityService.UpdateAsync(id,value) is TEntity entity)
             {
-                return T;
+                return entity;
             }
             return NotFound();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<TEntity>> Delete(int id)
         {
-            //TODO
+            if(await EntityService.DeleteAsync(id) is TEntity entity)
+            {
+                return entity;
+            }
+            return NotFound();
         }
     }
 }
