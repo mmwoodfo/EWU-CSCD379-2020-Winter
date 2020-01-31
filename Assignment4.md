@@ -6,7 +6,7 @@
   - DB context properly registered ✔
   - AutoMapper properly registered ✔
 - NSwag properly setup ✔
-- API controllers properly expose CRUD operations ✔❌
+- API controllers properly expose CRUD operations ✔
 - Controllers are all unit tested ✔❌
 
 ## Extra Credit
