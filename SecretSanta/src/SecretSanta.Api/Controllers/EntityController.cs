@@ -33,7 +33,7 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TEntity>> Get(int id)
         {
-            if (await EntityService.FetchByIdAsync(id) is { } entity)
+            if (await EntityService.FetchByIdAsync(id) is TEntity entity)
             {
                 return Ok(entity);
             }
@@ -49,6 +49,8 @@ namespace SecretSanta.Api.Controllers
 
         // PUT: api/Entity/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TEntity>> Put(int id, TEntity value)
         {
             if (await EntityService.UpdateAsync(id, value) is TEntity entity)
@@ -60,6 +62,8 @@ namespace SecretSanta.Api.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(int id)
         {
             if (await EntityService.DeleteAsync(id) is true)

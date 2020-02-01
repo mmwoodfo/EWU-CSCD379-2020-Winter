@@ -16,21 +16,21 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             return SampleData.CreateEnchantedForestGroup();
         }
-    }
-    public class TestableGroupSerivce : EntityService<Group>
-    {
-        protected override Group CreateWithId(Group entity, int id)
+        private class TestableGroupSerivce : EntityService<Group>
         {
-            return new TestGroup(entity, id);
+            protected override Group CreateWithId(Group entity, int id)
+            {
+                return new TestGroup(entity, id);
 
+            }
         }
-    }
-    public class TestGroup : Group
-    {
-        public TestGroup(Group entity, int id)
-            : base(entity?.Title ?? throw new ArgumentNullException(nameof(entity)))
+        private class TestGroup : Group
         {
-            Id = id;
+            public TestGroup(Group entity, int id)
+                : base(entity.Title)
+            {
+                Id = id;
+            }
         }
     }
 }

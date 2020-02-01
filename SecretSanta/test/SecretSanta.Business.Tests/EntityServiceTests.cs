@@ -92,10 +92,13 @@ namespace SecretSanta.Business.Tests
             IEntityService<TEntity> service = GetService(dbContext, Mapper);
 
             // Act
-            TEntity found = await service.FetchByIdAsync(entity.Id);
+            TEntity? found = await service.FetchByIdAsync(entity.Id);
 
             // Assert
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            //Justification: Shouldn't matter for this test case
             Assert.AreEqual(entity.Id, found.Id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         [TestMethod]
@@ -106,7 +109,7 @@ namespace SecretSanta.Business.Tests
             IEntityService<TEntity> service = GetService(dbContext, Mapper);
 
             // Act
-            TEntity found = await service.FetchByIdAsync(1);
+            TEntity? found = await service.FetchByIdAsync(1);
 
             // Assert
             Assert.IsNull(found);

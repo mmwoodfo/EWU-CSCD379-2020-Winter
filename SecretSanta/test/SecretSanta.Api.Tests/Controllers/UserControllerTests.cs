@@ -16,21 +16,20 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             return SampleData.CreateJonDoe();
         }
-    }
-    public class TestableUserSerivce : EntityService<User>
-    {
-        protected override User CreateWithId(User entity, int id)
+        private class TestableUserSerivce : EntityService<User>
         {
-            return new TestUser(entity, id);
-
+            protected override User CreateWithId(User entity, int id)
+            {
+                return new TestUser(entity, id);
+            }
         }
-    }
-    public class TestUser : User
-    {
-        public TestUser(User entity, int id)
-            : base(entity?.FirstName ?? throw new ArgumentNullException(nameof(entity)), entity.LastName)
+        private class TestUser : User
         {
-            Id = id;
+            public TestUser(User entity, int id)
+                : base(entity.FirstName, entity.LastName)
+            {
+                Id = id;
+            }
         }
     }
 }

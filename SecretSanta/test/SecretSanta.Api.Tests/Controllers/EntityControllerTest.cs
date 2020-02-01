@@ -23,10 +23,7 @@ namespace SecretSanta.Api.Tests.Controllers
         [TestMethod]
         public void Create_EntityController_Success()
         {
-            //Arrange
-            //var service = new EntityService<TEntity>();
-
-            //Act & Assert
+            //Arrange, Act & Assert
             _ = new EntityController<TEntity>(Service);
         }
 
@@ -58,7 +55,6 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task GetById_WithExistingEntity_Success()
         {
             //Arrange
-            // var service = new EntityService<TEntity>();
             TEntity entity = CreateInstance();
             entity = await Service.InsertAsync(entity);
 
@@ -134,6 +130,8 @@ namespace SecretSanta.Api.Tests.Controllers
 
     }
 
+
+    //------------------ TEST ENTITY SERVICE CLASS ----------------------//
     public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
     {
         private Dictionary<int, TEntity> Items { get; } = new Dictionary<int, TEntity>();
@@ -169,9 +167,14 @@ namespace SecretSanta.Api.Tests.Controllers
             return Task.FromResult(Items[id]);
         }
 
+#pragma warning disable IDE0060 // Remove unused parameter
+//Justification: The method is unimplemented - Don't want to remove 
+//               unused parameter in-case of future implementation
         public Task<TEntity[]> InsertAsync(params TEntity[] entity)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
-            throw new NotImplementedException();
+            //This is never used - so we didn't implement it
+            throw new NotImplementedException(); 
         }
 
         public Task<TEntity?> UpdateAsync(int id, TEntity entity)

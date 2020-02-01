@@ -16,21 +16,20 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             return SampleData.CreateArduinoGift();
         }
-    }
-
-    public class TestableGiftSerivce : EntityService<Gift>
-    {
-        protected override Gift CreateWithId(Gift entity, int id)
+        private class TestableGiftSerivce : EntityService<Gift>
         {
-            return new TestGift(entity, id);
+            protected override Gift CreateWithId(Gift entity, int id)
+            {
+                return new TestGift(entity, id);
+            }
         }
-    }
-    public class TestGift : Gift
-    {
-        public TestGift(Gift entity, int id)
-            : base(entity?.Title ?? throw new ArgumentNullException(nameof(entity)), entity.Url, entity.Description, entity.User)
+        private class TestGift : Gift
         {
-            Id = id;
+            public TestGift(Gift entity, int id)
+                : base(entity.Title, entity.Url, entity.Description, entity.User)
+            {
+                Id = id;
+            }
         }
     }
 }
