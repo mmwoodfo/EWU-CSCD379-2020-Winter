@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SecretSanta.Business;
@@ -18,16 +20,28 @@ namespace SecretSanta.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
-            services.AddSwaggerDocument();
+#pragma warning disable CA2000 // sqlite connection used beyond this scope
+            var sqliteConnection = new SqliteConnection("DataSource=:memory:");
+#pragma warning restore CA2000 // sqlite connection used beyond this scope
 
-            services.AddScoped<IGiftService, GiftService>();
+            sqliteConnection.Open();
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.EnableSensitiveDataLogging()
+                    .UseSqlite(sqliteConnection);
+            });
+
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IGiftService, GiftService>();
             services.AddScoped<IGroupService, GroupService>();
 
-            services.AddDbContext<ApplicationDbContext>();
+            //Take in an assembly & walk through all of the types on the assembly
+            System.Type profileType = typeof(AutomapperConfigurationProfile);
+            System.Reflection.Assembly assembly = profileType.Assembly;
+            services.AddAutoMapper(new[] { assembly });
+            services.AddMvc(opts => opts.EnableEndpointRouting = false);
 
-            services.AddAutoMapper(new[] { typeof(AutomapperConfigurationProfile).Assembly });
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
