@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SecretSanta.Business.Dto
 {
-    public class User : UserInput
+    public class Gift : GiftInput
     {
         public int Id { get; set; }
     }

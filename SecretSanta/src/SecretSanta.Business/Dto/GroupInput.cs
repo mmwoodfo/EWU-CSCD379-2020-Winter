@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SecretSanta.Business.Dto
 {
-    public class User : UserInput
+    public class GroupInput
     {
-        public int Id { get; set; }
+        public string? Title { get; set; }
     }
 }
