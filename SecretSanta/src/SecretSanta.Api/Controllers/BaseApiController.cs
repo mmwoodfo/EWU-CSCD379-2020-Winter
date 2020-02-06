@@ -17,7 +17,7 @@ namespace SecretSanta.Api.Controllers
             Service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-       [HttpGet]
+        [HttpGet]
         public async Task<IEnumerable<TDto>> Get() => await Service.FetchAllAsync();
 
         [HttpGet("{id}")]

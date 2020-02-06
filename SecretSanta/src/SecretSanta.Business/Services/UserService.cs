@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using SecretSanta.Data;
 using Microsoft.EntityFrameworkCore;
+using SecretSanta.Data;
 using System.Linq;
 
 namespace SecretSanta.Business.Services
@@ -11,7 +11,7 @@ namespace SecretSanta.Business.Services
             : base(dbContext, mapper)
         { }
 
-        protected override IQueryable<User> Query 
+        protected override IQueryable<User> Query
             => base.Query.Include(x => x.Gifts).Include(x => x.UserGroups);
     }
 }
