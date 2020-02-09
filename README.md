@@ -5,7 +5,7 @@ For this assignment you will be completing the SecretSanta.Api project and start
 - Create DTOs for all entities ✔
 - Create "input" DTOs for all entities ✔
 - Update AutoMapper configuration to be able to map between relevant DTOs and database entities. ✔
-- Update controllers and unit tests to use new DTO objects rather that `SecretSanta.Data` objects. ✔❌
+- Update controllers and unit tests to use new DTO objects rather that `SecretSanta.Data` objects. ✔
 - Update the SecretSanta.Api project to use a SQLite **file** database. ✔
 
 - Replace the API unit tests for **GiftController** with integration tests ✔
