@@ -80,7 +80,7 @@ namespace SecretSanta.Api.Tests.Controllers
         public async Task Put_WithMissingId_NotFound()
         {
             //Arrange
-            Business.Dto.UserInput user = Mapper.Map<User, Business.Dto.UserInput>(SampleData.CreateBrandonFields());
+            Business.Dto.UserInput user = Mapper.Map<User, Business.Dto.UserInput>(SampleData.CreateJonDoe());
             string jsonData = JsonSerializer.Serialize(user);
 
             using StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -88,7 +88,7 @@ namespace SecretSanta.Api.Tests.Controllers
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PutAsync("api/User/40", stringContent);
+            HttpResponseMessage response = await Client.PutAsync("api/User/42", stringContent);
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
@@ -96,40 +96,43 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task Put_WithId_UpdatesUser()
+        public async Task Delete_WithValidId_Success()
         {
-            //Arrange
-            User userEntity = SampleData.CreateRiverWillis();
+            // Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
+            User userEntity = SampleData.CreateJonDoe();
+
             context.Users.Add(userEntity);
             context.SaveChanges();
-
-            Business.Dto.UserInput user = Mapper.Map<User, Business.Dto.UserInput>(userEntity);
-            user.FirstName += " first name updated";
-            user.LastName += " last name updated";
-
-            string jsonData = JsonSerializer.Serialize(user);
-            using StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PutAsync($"api/Author/{userEntity.Id}", stringContent);
+            HttpResponseMessage response = await Client.DeleteAsync($"api/User/{userEntity.Id}");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
             response.EnsureSuccessStatusCode();
-            string returnedJson = await response.Content.ReadAsStringAsync();
+        }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
+        [TestMethod]
+        public async Task Delete_WithInvalidId_NotFound()
+        {
+            // Arrange
+            using ApplicationDbContext context = Factory.GetDbContext();
+            User userEntity = SampleData.CreateJonDoe();
 
-            Business.Dto.User returnedUser = JsonSerializer.Deserialize<Business.Dto.User>(returnedJson, options);
+            context.Users.Add(userEntity);
+            context.SaveChanges();
 
-            Assert.AreEqual(user.FirstName, returnedUser.FirstName);
-            Assert.AreEqual(user.LastName, returnedUser.LastName);
+            //Act
+            //Justification: URL is type string, not type URI in this project
+#pragma warning disable CA2234 // Pass system uri objects instead of strings
+            HttpResponseMessage response = await Client.DeleteAsync($"api/User/{42}");
+#pragma warning restore CA2234 // Pass system uri objects instead of strings
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

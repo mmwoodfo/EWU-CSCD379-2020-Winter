@@ -46,7 +46,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
         //============== UNIT TESTS ====================//
         [TestMethod]
-        public async Task Get_Returnsgroups()
+        public async Task Get_ReturnsGroups()
         {
             //Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
@@ -87,7 +87,7 @@ namespace SecretSanta.Api.Tests.Controllers
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PutAsync("api/Group/40", stringContent);
+            HttpResponseMessage response = await Client.PutAsync("api/Group/42", stringContent);
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
@@ -95,38 +95,43 @@ namespace SecretSanta.Api.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task Put_WithId_Updatesgroup()
+        public async Task Delete_WithValidId_Success()
         {
-            //Arrange
-            Group groupEntity = SampleData.CreateEnchantedForestGroup();
+            // Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
+            Group groupEntity = SampleData.CreateEnchantedForestGroup();
+
             context.Groups.Add(groupEntity);
             context.SaveChanges();
-
-            Business.Dto.GroupInput group = Mapper.Map<Group, Business.Dto.GroupInput>(groupEntity);
-            group.Title += " title updated";
-
-            string jsonData = JsonSerializer.Serialize(group);
-            using StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PutAsync($"api/Author/{groupEntity.Id}", stringContent);
+            HttpResponseMessage response = await Client.DeleteAsync($"api/Group/{groupEntity.Id}");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
             response.EnsureSuccessStatusCode();
-            string returnedJson = await response.Content.ReadAsStringAsync();
+        }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
+        [TestMethod]
+        public async Task Delete_WithInvalidId_NotFound()
+        {
+            // Arrange
+            using ApplicationDbContext context = Factory.GetDbContext();
+            Group groupEntity = SampleData.CreateEnchantedForestGroup();
 
-            Business.Dto.Group returnedgroup = JsonSerializer.Deserialize<Business.Dto.Group>(returnedJson, options);
+            context.Groups.Add(groupEntity);
+            context.SaveChanges();
 
-            Assert.AreEqual(group.Title, returnedgroup.Title);
+            //Act
+            //Justification: URL is type string, not type URI in this project
+#pragma warning disable CA2234 // Pass system uri objects instead of strings
+            HttpResponseMessage response = await Client.DeleteAsync($"api/Group/{42}");
+#pragma warning restore CA2234 // Pass system uri objects instead of strings
+
+            //Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }
