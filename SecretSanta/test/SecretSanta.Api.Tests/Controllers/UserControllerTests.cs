@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SecretSanta.Business;
 using SecretSanta.Data;
 using SecretSanta.Data.Tests;
 using System.Collections.Generic;
