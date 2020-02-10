@@ -207,7 +207,7 @@ namespace SecretSanta.Api.Tests.Controllers
             // Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PostAsync($"api/Gift/{entity.Id}", stringContent);
+            HttpResponseMessage response = await Client.PostAsync($"api/Gift", stringContent);
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             // Assert
