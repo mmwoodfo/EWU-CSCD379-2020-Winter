@@ -41,7 +41,7 @@ namespace SecretSanta.Api.Controllers
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Put(int id, [FromBody] TInputDto value)
         {
-            if(await Service.UpdateAsync(id, value) is Gift entity)
+            if (await Service.UpdateAsync(id, value) is Gift entity)
             {
                 return Ok(entity);
             }

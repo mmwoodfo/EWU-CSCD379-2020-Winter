@@ -1,19 +1,15 @@
 ﻿using AutoMapper;
-using SecretSanta.Api.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Business;
 using SecretSanta.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using SecretSanta.Data.Tests;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SecretSanta.Data.Tests;
-using Microsoft.EntityFrameworkCore;
 
 namespace SecretSanta.Api.Tests.Controllers
 {

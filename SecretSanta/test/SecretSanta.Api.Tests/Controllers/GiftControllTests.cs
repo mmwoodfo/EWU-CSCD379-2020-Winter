@@ -1,26 +1,22 @@
 ﻿using AutoMapper;
-using SecretSanta.Api.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecretSanta.Business;
 using SecretSanta.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using SecretSanta.Data.Tests;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using SecretSanta.Data.Tests;
-using Microsoft.EntityFrameworkCore;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
     [TestClass]
     public class GiftControllTests
     {
-//Initialized in the test initialization
+        //Initialized in the test initialization
 #nullable disable
         private SecretSantaWebApplicationFactory Factory { get; set; }
         private HttpClient Client { get; set; }
@@ -56,7 +52,7 @@ namespace SecretSanta.Api.Tests.Controllers
             context.SaveChanges();
 
             //Act
-//Justification: URL is type string, not type URI in this project
+            //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
             HttpResponseMessage response = await Client.GetAsync("api/Gift");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
@@ -162,7 +158,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
             //Assert
             response.EnsureSuccessStatusCode();
-            
+
             using ApplicationDbContext contextAct = Factory.GetDbContext();
 
             List<Data.Gift> giftsAfter = await context.Gifts.ToListAsync();

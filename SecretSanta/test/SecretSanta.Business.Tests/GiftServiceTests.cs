@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SecretSanta.Business.Services;
 using SecretSanta.Business.Dto;
+using SecretSanta.Business.Services;
 using SecretSanta.Data;
 using System;
 
