@@ -195,12 +195,12 @@ namespace SecretSanta.Api.Tests.Controllers
             Data.Gift entity = SampleData.CreateArduinoGift();
 
             //DTO
-            Business.Dto.GiftInput im = Mapper.Map<Gift, Business.Dto.Gift>(entity);
+            Business.Dto.GiftInput gift = Mapper.Map<Gift, Business.Dto.Gift>(entity);
             System.Type inputType = typeof(Business.Dto.GiftInput);
             System.Reflection.PropertyInfo? propInfo = inputType.GetProperty(propertyName);
-            propInfo!.SetValue(im, null);
+            propInfo!.SetValue(gift, null);
 
-            string jsonData = JsonSerializer.Serialize(im);
+            string jsonData = JsonSerializer.Serialize(gift);
 
             using StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -211,7 +211,7 @@ namespace SecretSanta.Api.Tests.Controllers
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }
