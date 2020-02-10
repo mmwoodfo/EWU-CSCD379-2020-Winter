@@ -211,7 +211,7 @@ namespace SecretSanta.Api.Tests.Controllers
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             // Assert
-            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }
