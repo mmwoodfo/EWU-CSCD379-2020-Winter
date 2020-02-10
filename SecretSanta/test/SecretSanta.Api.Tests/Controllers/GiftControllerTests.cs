@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace SecretSanta.Api.Tests.Controllers
 {
     [TestClass]
-    public class GiftControllTests
+    public class GiftControllerTests
     {
         //Initialized in the test initialization
 #nullable disable
