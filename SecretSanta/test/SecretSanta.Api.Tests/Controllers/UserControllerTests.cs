@@ -14,34 +14,8 @@ using System.Threading.Tasks;
 namespace SecretSanta.Api.Tests.Controllers
 {
     [TestClass]
-    public class UserControllerTests
+    public class UserControllerTests : BaseControllerTests
     {
-        //Initialized in the test initialization
-#nullable disable
-        private SecretSantaWebApplicationFactory Factory { get; set; }
-        private HttpClient Client { get; set; }
-#nullable enable
-
-        private IMapper Mapper { get; } = AutomapperConfigurationProfile.CreateMapper();
-
-        [TestInitialize]
-        public void TestSetup()
-        {
-            Factory = new SecretSantaWebApplicationFactory();
-
-            using ApplicationDbContext context = Factory.GetDbContext();
-            context.Database.EnsureCreated();
-
-            Client = Factory.CreateClient();
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            Factory.Dispose();
-        }
-
-        //============== UNIT TESTS ====================//
         [TestMethod]
         public async Task Get_ReturnsUsers()
         {
