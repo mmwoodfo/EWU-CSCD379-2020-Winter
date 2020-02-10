@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SecretSanta.Data.Tests;
+using Microsoft.EntityFrameworkCore;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
@@ -100,19 +101,30 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             // Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
-            User userEntity = SampleData.CreateJonDoe();
+            User userEntity1 = SampleData.CreateJonDoe();
+            User userEntity2 = SampleData.CreateBrandonFields();
+            User userEntity3 = SampleData.CreateRiverWillis();
 
-            context.Users.Add(userEntity);
+            context.Users.Add(userEntity1);
+            context.Users.Add(userEntity2);
+            context.Users.Add(userEntity3);
+
             context.SaveChanges();
 
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.DeleteAsync($"api/User/{userEntity.Id}");
+            HttpResponseMessage response = await Client.DeleteAsync($"api/User/{userEntity1.Id}");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
             response.EnsureSuccessStatusCode();
+
+            using ApplicationDbContext contextAct = Factory.GetDbContext();
+
+            List<Data.User> usersAfter = await context.Users.ToListAsync();
+
+            Assert.AreEqual(2, usersAfter.Count);
         }
 
         [TestMethod]

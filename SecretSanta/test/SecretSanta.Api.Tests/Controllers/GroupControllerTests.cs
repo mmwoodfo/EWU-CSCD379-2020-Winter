@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SecretSanta.Data.Tests;
+using Microsoft.EntityFrameworkCore;
 
 namespace SecretSanta.Api.Tests.Controllers
 {
@@ -99,19 +100,30 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             // Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
-            Group groupEntity = SampleData.CreateEnchantedForestGroup();
+            Group groupEntity1 = SampleData.CreateEnchantedForestGroup();
+            Group groupEntity2 = SampleData.CreateEnchantedForestGroup();
+            Group groupEntity3 = SampleData.CreateEnchantedForestGroup();
 
-            context.Groups.Add(groupEntity);
+            context.Groups.Add(groupEntity1);
+            context.Groups.Add(groupEntity2);
+            context.Groups.Add(groupEntity3);
+
             context.SaveChanges();
 
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.DeleteAsync($"api/Group/{groupEntity.Id}");
+            HttpResponseMessage response = await Client.DeleteAsync($"api/Group/{groupEntity1.Id}");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
             response.EnsureSuccessStatusCode();
+
+            using ApplicationDbContext contextAct = Factory.GetDbContext();
+
+            List<Data.Group> groupsAfter = await context.Groups.ToListAsync();
+
+            Assert.AreEqual(2, groupsAfter.Count);
         }
 
         [TestMethod]

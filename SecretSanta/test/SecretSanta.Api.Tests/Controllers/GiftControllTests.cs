@@ -144,19 +144,30 @@ namespace SecretSanta.Api.Tests.Controllers
         {
             // Arrange
             using ApplicationDbContext context = Factory.GetDbContext();
-            Gift giftEntity = SampleData.CreateArduinoGift();
+            Gift giftEntity1 = SampleData.CreateArduinoGift();
+            Gift giftEntity2 = SampleData.CreateArduinoGift();
+            Gift giftEntity3 = SampleData.CreateArduinoGift();
 
-            context.Gifts.Add(giftEntity);
+            context.Gifts.Add(giftEntity1);
+            context.Gifts.Add(giftEntity2);
+            context.Gifts.Add(giftEntity3);
+
             context.SaveChanges();
 
             //Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.DeleteAsync($"api/Gift/{giftEntity.Id}");
+            HttpResponseMessage response = await Client.DeleteAsync($"api/Gift/{giftEntity1.Id}");
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
             //Assert
             response.EnsureSuccessStatusCode();
+            
+            using ApplicationDbContext contextAct = Factory.GetDbContext();
+
+            List<Data.Gift> giftsAfter = await context.Gifts.ToListAsync();
+
+            Assert.AreEqual(2, giftsAfter.Count);
         }
 
         [TestMethod]
@@ -182,27 +193,28 @@ namespace SecretSanta.Api.Tests.Controllers
         [TestMethod]
         [DataRow(nameof(Business.Dto.GiftInput.Title))]
         [DataRow(nameof(Business.Dto.GiftInput.UserId))]
-        public async Task Post_WithOutRequiredProperties_BadResult(string propertyName)
+        public async Task Post_WithOutRequiredProperties_BadRequest(string propertyName)
         {
-            //Arrange
-            Data.Gift giftEntity = SampleData.CreateArduinoGift();
+            // Arrange
+            Data.Gift entity = SampleData.CreateArduinoGift();
 
-            Business.Dto.GiftInput gift = Mapper.Map<Gift, Business.Dto.Gift>(giftEntity);
+            //DTO
+            Business.Dto.GiftInput im = Mapper.Map<Gift, Business.Dto.Gift>(entity);
             System.Type inputType = typeof(Business.Dto.GiftInput);
             System.Reflection.PropertyInfo? propInfo = inputType.GetProperty(propertyName);
-            propInfo!.SetValue(gift, null);
+            propInfo!.SetValue(im, null);
 
-            string jsonData = JsonSerializer.Serialize(gift);
+            string jsonData = JsonSerializer.Serialize(im);
 
             using StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            //Act
+            // Act
             //Justification: URL is type string, not type URI in this project
 #pragma warning disable CA2234 // Pass system uri objects instead of strings
-            HttpResponseMessage response = await Client.PutAsync($"api/Gift/{giftEntity.Id}", stringContent);
+            HttpResponseMessage response = await Client.PostAsync($"api/Gift/{entity.Id}", stringContent);
 #pragma warning restore CA2234 // Pass system uri objects instead of strings
 
-            //Assert
+            // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
