@@ -13,7 +13,7 @@ namespace SecretSanta.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddControllersWithViews();
 
             services.AddHttpClient("SecretSantaApi");
         }
@@ -28,9 +28,14 @@ namespace SecretSanta.Web
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoint =>
+            {
+                endpoint.MapDefaultControllerRoute();
+            });
         }
     }
 }
