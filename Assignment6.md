@@ -1,10 +1,10 @@
 # Assignment
 
 - Within the API project
-  - Remove the hardcoded Data Source value for the database and use the value stored in the ConnectionStrings.DefaultConnection within the appropriate App Settings file ✔❌
-  - Replace the EnsureCreated with a call to Migrate ✔❌
-    - This will require the generation of Migrations as well. The command should be run from the API project, but the migrations should live within the Data project ✔❌
-  - Modify the ConfigureServices and Configure methods to use the new ASP.NET Core 3.x routing
+  - Remove the hardcoded Data Source value for the database and use the value stored in the ConnectionStrings.DefaultConnection within the appropriate App Settings file ✔
+  - Replace the EnsureCreated with a call to Migrate ✔
+    - This will require the generation of Migrations as well. The command should be run from the API project, but the migrations should live within the Data project ✔
+  - Modify the ConfigureServices and Configure methods to use the new ASP.NET Core 3.x routing ✔❌
 
 - Within the Web project
   - Modify the ConfigureServices and Configure methods to use the new ASP.NET Core 3.x routing ✔❌
