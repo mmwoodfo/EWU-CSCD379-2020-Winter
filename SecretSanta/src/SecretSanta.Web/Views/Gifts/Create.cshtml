@@ -1,48 +1,41 @@
 ﻿@model SecretSanta.Web.Api.GiftInput
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h1>Create</h1>
-
-<h4>GiftInput</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <form asp-route="Create">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="field">
+            <label class="label" asp-for="Title"></label>
+            <div class="control">
+                <input class="input" type="text" asp-for="Title" />
+                <span asp-validation-for="Title"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="Description"></label>
+            <div class="control">
+                <input class="input" type="text" asp-for="Description" />
+                <span asp-validation-for="Description"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Url" class="control-label"></label>
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger"></span>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="Url"></label>
+            <div class="control">
+                <input class="input" type="text" asp-for="Url" />
+                <span asp-validation-for="Url"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="field">
+            <label class="label" asp-for="UserId"></label>
+            <div class="control">
+                <input class="input" type="text" asp-for="UserId" />
+                <span asp-validation-for="UserId"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button id="submit" onclick="setAttribute('disabled', 'disabled');" class="button is-primary">Submit</button>
             </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+            <div class="control">
+                <a asp-action="Index" class="button is-light">Cancel</a>
+            </div>
+        </div>
+    </form>

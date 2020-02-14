@@ -15,5 +15,9 @@ namespace SecretSanta.Web.Controllers
         {
             return View();
         }
+        public IActionResult Html()
+        {
+            return View();
+        }
     }
 }
