@@ -12,18 +12,34 @@ namespace SecretSanta.Web.Controllers
 {
     public class UsersController : Controller
     {
+        public IHttpClientFactory ClientFactory { get; }
+        private UserClient Client { get; }
+
         public UsersController(IHttpClientFactory clientFactory)
         {
             HttpClient httpClient = clientFactory?.CreateClient("SecretSantaApi") ?? throw new ArgumentNullException(nameof(clientFactory));
             Client = new UserClient(httpClient);
-        }
 
-        private UserClient Client { get; }
+            ClientFactory = clientFactory;
+        }
 
         public async Task<IActionResult> Index()
         {
             ICollection<User> users = await Client.GetAllAsync();
             return View(users);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(UserInput userInput)
+        {
+            var createdUser = await Client.PostAsync(userInput);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

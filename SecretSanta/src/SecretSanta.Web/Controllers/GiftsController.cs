@@ -10,25 +10,22 @@ namespace SecretSanta.Web.Controllers
     public class GiftsController : Controller
     {
         public IHttpClientFactory ClientFactory { get; }
+        private GiftClient Client { get; }
 
         public GiftsController(IHttpClientFactory clientFactory)
         {
-            if (clientFactory is null)
-            {
-                throw new System.ArgumentNullException(nameof(clientFactory));
-            }
+            HttpClient httpClient = clientFactory?.CreateClient("SecretSantaApi") ?? throw new ArgumentNullException(nameof(clientFactory));
+            Client = new GiftClient(httpClient);
 
             ClientFactory = clientFactory;
         }
 
         public async Task<IActionResult> Index()
         {
-            HttpClient httpClient = ClientFactory.CreateClient("SantaApi");
-
-            var client = new GiftClient(httpClient);
-            ICollection<Gift> gifts = await client.GetAllAsync();
+            ICollection<Gift> gifts = await Client.GetAllAsync();
             return View(gifts);
         }
+
         public ActionResult Create()
         {
             return View();
@@ -41,10 +38,7 @@ namespace SecretSanta.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                HttpClient httpClient = ClientFactory.CreateClient("SantaApi");
-
-                var client = new GiftClient(httpClient);
-                var createdGift = await client.PostAsync(giftInput);
+                var createdGift = await Client.PostAsync(giftInput);
 
                 result = RedirectToAction(nameof(Index));
             }
@@ -54,10 +48,7 @@ namespace SecretSanta.Web.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            HttpClient httpClient = ClientFactory.CreateClient("SantaApi");
-
-            var client = new GiftClient(httpClient);
-            var fetchedGift = await client.GetAsync(id);
+            var fetchedGift = await Client.GetAsync(id);
 
             return View(fetchedGift);
         }
@@ -65,10 +56,7 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, GiftInput giftInput)
         {
-            HttpClient httpClient = ClientFactory.CreateClient("SantaApi");
-
-            var client = new GiftClient(httpClient);
-            var updateGift = await client.PutAsync(id, giftInput);
+            var updateGift = await Client.PutAsync(id, giftInput);
 
             return RedirectToAction(nameof(Index));
         }
