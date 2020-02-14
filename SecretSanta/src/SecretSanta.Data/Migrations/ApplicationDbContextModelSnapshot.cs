@@ -105,7 +105,7 @@ namespace SecretSanta.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
+                        //.IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ModifiedBy")
