@@ -29,9 +29,13 @@ namespace SecretSanta.Api.Tests.Controllers
             return new User
             {
                 Id = NextId++,
+                //Justification: Okay for this test case to not validate argument
+#pragma warning disable CA1062 // Validate arguments of public methods
                 FirstName = dto.FirstName,
+#pragma warning restore CA1062 // Validate arguments of public methods
                 LastName = dto.LastName
             };
         }
     }
 }
+

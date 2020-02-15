@@ -38,7 +38,7 @@ namespace SecretSanta.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                var createdGift = await Client.PostAsync(giftInput);
+                await Client.PostAsync(giftInput);
 
                 result = RedirectToAction(nameof(Index));
             }
@@ -56,7 +56,7 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, GiftInput giftInput)
         {
-            var updateGift = await Client.PutAsync(id, giftInput);
+            await Client.PutAsync(id, giftInput);
 
             return RedirectToAction(nameof(Index));
         }
