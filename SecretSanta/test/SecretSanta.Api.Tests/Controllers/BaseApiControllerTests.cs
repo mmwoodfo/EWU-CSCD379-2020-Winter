@@ -48,9 +48,9 @@ namespace SecretSanta.Api.Tests.Controllers
             TService service = new TService();
             BaseApiController<TDto, TInputDto> controller = CreateController(service);
 
-            var result = await controller.Get(1);
+            ActionResult<TDto> result = await controller.Get(1);
 
-            Assert.IsTrue(result is NotFoundResult);
+            Assert.IsTrue(result.Result is NotFoundResult);
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
             var result = await controller.Get(entity.Id);
 
-            var okResult = result as OkObjectResult;
+            var okResult = result.Result as OkObjectResult;
             
             Assert.AreEqual(entity, okResult?.Value);
         }
