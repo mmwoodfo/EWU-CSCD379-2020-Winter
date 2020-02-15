@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <!-- Stylesheets -->
+    
+    <link href="~/css/main.6fa45095e6f265b6b67a.css" rel="stylesheet" />
+    
+    <!-- End Stylesheets -->
+    <style>
+        input.input-validation-error {
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -11,53 +21,18 @@
             <ul>
                 <li><a asp-controller="Gifts" asp-action="Index">Gifts</a></li>
                 <li><a asp-controller="Users" asp-action="Index">Users</a></li>
-                <li><a asp-controller="Groups" asp-action="Index">Groups</a></li>
+                <li><a asp-controller="Groups"asp-action="Index">Groups</a></li>
             </ul>
         </nav>
     </header>
     <div>
         @RenderBody()
     </div>
+    <!-- Scripts -->
     
+    <script src="~/js/main.6fa45095e6f265b6b67a.js"></script>
+    
+    <!-- End Scripts -->
+    @RenderSection("scripts", required: false)
 </body>
 </html>
-
-<style>
-p {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-a{
-    color: #3e6489;
-}
-
-html{
-    background: #131313;
-    color: white;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #f69323;
-}
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-    li a:hover {
-        background-color: black;
-        color: white;
-    }
-</style>
