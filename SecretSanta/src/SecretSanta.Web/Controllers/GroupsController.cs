@@ -25,5 +25,11 @@ namespace SecretSanta.Web.Controllers
             ICollection<Group> groups = await Client.GetAllAsync();
             return View(groups);
         }
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Client.DeleteAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

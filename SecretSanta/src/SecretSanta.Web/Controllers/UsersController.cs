@@ -63,5 +63,12 @@ namespace SecretSanta.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+       
+        public async Task<ActionResult> Delete(int id)
+        {
+            await Client.DeleteAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
