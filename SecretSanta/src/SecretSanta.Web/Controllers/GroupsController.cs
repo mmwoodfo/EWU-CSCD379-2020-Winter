@@ -79,5 +79,11 @@ namespace SecretSanta.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            Group group = await Client.GetAsync(id);
+            return View(group);
+        }
     }
 }
