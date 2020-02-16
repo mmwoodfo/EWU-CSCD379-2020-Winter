@@ -47,18 +47,32 @@ namespace SecretSanta.Web.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            var fetchedGroup = await Client.GetAsync(id);
+            ActionResult result = View(id);
 
-            return View(fetchedGroup);
+            if (ModelState.IsValid)
+            {
+                var fetchedGroup = await Client.GetAsync(id);
+                result = View(fetchedGroup);
+            }
+
+            return result;
         }
 
         [HttpPost]
         public async Task<ActionResult> Edit(int id, GroupInput groupInput)
         {
-            await Client.PutAsync(id, groupInput);
+            ActionResult result = View();
 
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                await Client.PutAsync(id, groupInput);
+
+                result = RedirectToAction(nameof(Index));
+            }
+
+            return result;
         }
+
         public async Task<ActionResult> Delete(int id)
         {
             await Client.DeleteAsync(id);
