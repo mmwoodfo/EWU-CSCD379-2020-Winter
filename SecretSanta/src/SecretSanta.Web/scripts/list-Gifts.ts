@@ -1,8 +1,6 @@
 ﻿import {
     IGiftClient,
-    GiftClient,
-    Gift,
-    User
+    GiftClient
 } from "./secretsanta-engine-api.client";
 
 export class App {

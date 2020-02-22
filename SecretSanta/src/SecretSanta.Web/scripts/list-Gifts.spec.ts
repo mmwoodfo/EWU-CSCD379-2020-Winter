@@ -6,7 +6,6 @@ import "mocha";
 
 import {
     IGiftClient,
-    GiftClient,
     Gift,
     GiftInput,
     User

@@ -230,6 +230,7 @@ export class GiftClient implements IGiftClient {
         }
     }
 }
+
 export interface IGroupClient {
     getAll(): Promise<Group[]>;
     post(entity: GroupInput): Promise<Group>;
