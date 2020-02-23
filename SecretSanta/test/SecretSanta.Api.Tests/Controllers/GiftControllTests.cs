@@ -24,7 +24,7 @@ namespace SecretSanta.Api.Tests.Controllers
 
     public class GiftInMemoryService : InMemoryEntityService<Gift, GiftInput>, IGiftService
     {
-        private int NextId { get; set; } 
+        private int NextId { get; set; }
         protected override Gift Convert(GiftInput dto)
         {
             return new Gift

@@ -75,12 +75,12 @@ namespace SecretSanta.Business.Tests
             List<TDto> items = await service.FetchAllAsync();
 
             // Assert
-            CollectionAssert.AreEquivalent(new[] 
+            CollectionAssert.AreEquivalent(new[]
             {
                 item1.Id,
                 item2.Id,
                 item3.Id
-            }, 
+            },
             items.Select(x => x.Id).ToArray());
         }
 

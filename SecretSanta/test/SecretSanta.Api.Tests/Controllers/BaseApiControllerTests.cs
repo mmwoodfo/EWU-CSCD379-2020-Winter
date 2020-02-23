@@ -14,7 +14,7 @@ namespace SecretSanta.Api.Tests.Controllers
     public abstract class BaseApiControllerTests<TDto, TInputDto, TService>
         where TDto : class, TInputDto, IEntity
         where TInputDto : class
-        where TService : InMemoryEntityService<TDto,TInputDto>, new()
+        where TService : InMemoryEntityService<TDto, TInputDto>, new()
     {
         protected abstract BaseApiController<TDto, TInputDto> CreateController(TService service);
 
@@ -64,7 +64,7 @@ namespace SecretSanta.Api.Tests.Controllers
             var result = await controller.Get(entity.Id);
 
             var okResult = result?.Result as OkObjectResult;
-            
+
             Assert.AreEqual(entity, okResult?.Value);
         }
 
