@@ -1,4 +1,7 @@
 ﻿import '../styles/site.scss';
 import { App } from "./list-Gifts";
 
-new App().renderGifts();
+let app = new App();
+
+app.generateGiftList();
+app.renderGifts();

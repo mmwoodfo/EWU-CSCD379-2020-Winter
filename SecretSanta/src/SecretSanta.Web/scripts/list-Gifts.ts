@@ -1,25 +1,50 @@
 ﻿import {
     IGiftClient,
-    GiftClient
+    GiftClient,
+    Gift,
+    User
 } from "./secretsanta-engine-api.client";
 
 export class App {
     async renderGifts() {
-        //await this.deleteAllGifts();
         var gifts = await this.retrieveAllGifts();
-
-        const giftList = document.getElementById("giftList");
-        for (let i = 0; i < gifts.length; i++) {
-            const gift = gifts[i];
+        const itemList = document.getElementById("giftList");
+        gifts.forEach(gift => {
             const listItem = document.createElement("li");
-            listItem.textContent = `${gift.title}:${gift.description}`;
-            giftList.append(listItem);
-        }
+            listItem.textContent = `${gift.id}:${gift.title}:${gift.description}:${gift.url}`
+            itemList.append(listItem);
+        })
     }
 
     giftClient: IGiftClient;
     constructor(giftClient: IGiftClient = new GiftClient()) {
         this.giftClient = giftClient;
+    }
+
+    async generateGiftList() {
+        await this.deleteAllGifts();
+
+        var user = new User({
+            firstName: "Inigo",
+            lastName: "Montoya",
+            santaId: null,
+            gifts: null,
+            groups: null,
+            id: 1
+        });
+
+        let gifts: Gift[];
+        for (var i = 0; i < 5; i++) {
+            var gift = new Gift({
+                title: "Title",
+                description: "Description",
+                url: "http://www.Gift.com",
+                userId: 1,
+                id: i
+            })
+
+            this.giftClient.post(gift);
+        }
     }
 
     async deleteAllGifts() {
