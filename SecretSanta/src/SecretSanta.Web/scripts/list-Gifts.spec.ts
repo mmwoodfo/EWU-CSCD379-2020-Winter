@@ -21,14 +21,6 @@ describe("RetrieveAllGifts", () => {
 
 class MockGiftClient implements IGiftClient {
     async getAll(): Promise<Gift[]> {
-        var user = new User({
-            firstName: "Inigo",
-            lastName: "Montoya",
-            santaId: null,
-            gifts: null,
-            groups: null,
-            id: 1
-        });
 
         let gifts: Gift[];
         for (var i = 0; i < 5; i++) {

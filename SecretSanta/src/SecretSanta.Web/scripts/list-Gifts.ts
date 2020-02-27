@@ -24,15 +24,6 @@ export class App {
     async generateGiftList() {
         await this.deleteAllGifts();
 
-        var user = new User({
-            firstName: "Inigo",
-            lastName: "Montoya",
-            santaId: null,
-            gifts: null,
-            groups: null,
-            id: 1
-        });
-
         let gifts: Gift[];
         for (var i = 0; i < 5; i++) {
             var gift = new Gift({
@@ -49,9 +40,9 @@ export class App {
 
     async deleteAllGifts() {
         var gifts = await this.retrieveAllGifts();
-        for (var i = 0; i < gifts.length; i++) {
-            await this.giftClient.delete(gifts[i].id);
-        }
+        gifts.forEach(async gift => {
+            await this.giftClient.delete(gift.id);
+        })
     }
         
     async retrieveAllGifts() {
