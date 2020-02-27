@@ -8,6 +8,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = (env, argv) => {
     const isProd = argv.mode === 'production';
@@ -51,6 +52,23 @@ module.exports = (env, argv) => {
                     }
                 },
                 {
+        test: /\.vue$/,
+            loader: 'vue-loader',
+                options: {
+            loaders: {
+                'scss': 'vue-style-loader!css-loader!sass-loader',
+                    'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+            }
+        }
+    },
+    {
+        test: /\.tsx?$/,
+            loader: 'ts-loader',
+                exclude: /node_modules/,
+                    options: {
+            appendTsSuffixTo: [/\.vue$/]
+        }
+                {
                     test: /\.tsx?$/,
                     loader: 'ts-loader',
                     exclude: /node_modules/
@@ -59,6 +77,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new CleanWebpackPlugin(),
+            new VueLoaderPlugin(),
 
             // copy src images to wwwroot
             new CopyWebpackPlugin(
@@ -84,7 +103,17 @@ module.exports = (env, argv) => {
                 minify: false,
                 template: path.resolve(templatePath, './_Layout_Template.cshtml')
             })
-        ],
+        ],        
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.vue'],
+            alias: {
+                'vue$': 'vue/dist/vue.esm.js'
+            },
+            modules: [
+                path.resolve(__dirname, './node_modules'),
+                srcPath
+            ]
+        },
         devtool: '#eval-source-map'
     };
 };

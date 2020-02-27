@@ -5,8 +5,8 @@ to the website to add your own personal flare
 
 - Fix up the navigation so that it isn't an unordered list of items. ✔
 - Change up the theme a bit so that the default colors aren't used at a minimum for buttons and links. ✔
-- Add the necessary resources to the package.json file so that vuejs applications can be transpiled correctly. ✔❌
-- Configure webpack to transpile the vuejs files. ✔❌
+- Add the necessary resources to the package.json file so that vuejs applications can be transpiled correctly. ✔
+- Configure webpack to transpile the vuejs files. ✔
 - Modify the app.ts file so that you can create/update/delete/fetch the users, gifts, and groups. ✔❌
 - Remove the ListGifts functionality and replace the index page in each of the Gifts, Users, Groups views so that you can perform all the CRUD features
   without leaving the page. ✔❌
