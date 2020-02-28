@@ -9,11 +9,13 @@ $dark-red: #881719;
 $green: #2d544f;
 $dark-green: #132823;
 
-$gold: #eaaf1d;
+$gold: lighten(#90593f, 20);
+
+$snow: #ecedef;
 
 $primary: $dark-red;
-$link: $gold;
-$link-hover: $red;
+$link: $snow;
+$link-hover: lighten($gold, 30);
 
 $table-background-color: transparent;
 
@@ -22,8 +24,8 @@ $family-sans-serif: "Nunito Sans", -apple-system, system-ui, BlinkMacSystemFont,
 $radius: 0;
 $radius-small: $radius;
 
-$body-background-color: $green;
-$background: $dark-green;
+$body-background-color: $snow;
+$background: $green;
 $footer-background-color: $background;
 $button-background-color: $background;
 $button-border-color: lighten($button-background-color, 15);
@@ -34,18 +36,18 @@ $subtitle-strong-color: $gold;
 
 $text: $gold;
 $text-light: lighten($text, 10);
-$text-strong: darken($text, 5);
+$text-strong: $gold;
 
 $input-background-color: $dark-green;
 $input-selected-background-color: $green;
 $input-border-color: transparent;
 
 $navbar-height: 5rem;
-$navbar-background-color: $dark-green;
+$navbar-background-color: $dark-red;
 $navbar-item-color: white;
 $navbar-item-hover-color: $gold;
-$navbar-item-active-color: $green;
-$navbar-item-hover-background-color: $green;
+$navbar-item-active-color: $snow;
+$navbar-item-hover-background-color: $snow;
 $navbar-item-active-background-color: transparent;
 $navbar-divider-background-color: lighten($primary, 10);
 
