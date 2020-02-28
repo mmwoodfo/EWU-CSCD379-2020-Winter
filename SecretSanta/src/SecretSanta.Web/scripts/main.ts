@@ -4,6 +4,8 @@
 //import Blah from './Blah.vue';
 
 import GiftsComponent from './components/Gift/GiftsComponent.vue'
+import UsersComponent from './components/User/UsersComponent.vue'
+import GroupsComponent from './components/Group/GroupsComponent.vue'
 
 import Vue from 'vue';
 document.addEventListener("DOMContentLoaded", async () => {
@@ -11,6 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     new Vue({
         render: h => h(GiftsComponent)
     }).$mount('#giftList');
+    if (document.getElementById('userList'))
+        new Vue({
+            render: h => h(UsersComponent)
+        }).$mount('#userList');
+    if (document.getElementById('groupList'))
+        new Vue({
+            render: h => h(GroupsComponent)
+        }).$mount('#groupList');
 });
 
 //document.addEventListener("DOMContentLoaded", async () => {

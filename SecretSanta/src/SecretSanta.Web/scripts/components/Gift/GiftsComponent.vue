@@ -2,6 +2,7 @@
     <template>
         <div>
             <button class=" button" @click='createGift'>Create new</button>
+
             <table class="table">
                 <thead>
                     <tr>
@@ -9,29 +10,29 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Url</th>
-                        <th></th>
+                        <th>UserId</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <tr v-for="gift in Gifts" :id="gift.id">
-                        <td> {{gift.id}}</td>
+                    <tr v-for="gift in gifts" :id="gift.id">
+                        <td>{{gift.id}}</td>
                         <td>{{gift.title}}</td>
                         <td>{{gift.description}}</td>
-                        <td>{{gift.Url}}</td>
+                        <td>{{gift.url}}</td>
+                        <td>{{gift.userId}}</td>
+
                         <td>
                             <button class="button" @click='setGift(gift)'>Edit</button>
-                            <button class="button" @click='deteGift(gift)'>Edit</button>
-                            <!--<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+                            <button class="button" @click='deleteGift(gift)'>Delete</button>
                         </td>
                     </tr>
 
                 </tbody>
             </table>
-            <gift-details-component v-if="selectedGift != null" 
+            <gift-details-component v-if="selectedGift != null"
                                     :gift="selectedGift"
-                                    @gift-saved="refreshGifts()"></gift-details-component>
+                                    @gift-saved="refreshGifts"></gift-details-component>
         </div>
     </template>
 <script lang="ts">
@@ -46,6 +47,7 @@
     export default class GiftsComponent extends Vue {
         gifts: Gift[] = null;
         selectedGift: Gift = null;
+        search: string = null;
         async loadGifts() {
             let giftClient = new GiftClient();
             this.gifts = await giftClient.getAll();
@@ -53,10 +55,10 @@
         async mounted() {
             await this.loadGifts();
         }
+
         setGift(gift: Gift) {
             this.selectedGift = gift;
         }
-        
         createGift() {
             this.selectedGift = <Gift>{};
         }
@@ -66,8 +68,7 @@
         }
         async deleteGift(gift: Gift) {
             let giftClient = new GiftClient();
-            //need a listen box
-            if (confirm('are you sure you want to delete ${gift.Title}')) {
+            if (confirm(`are you sure you want to delete ${gift.title}`)) {
                 await giftClient.delete(gift.id);
             }
             await this.refreshGifts();

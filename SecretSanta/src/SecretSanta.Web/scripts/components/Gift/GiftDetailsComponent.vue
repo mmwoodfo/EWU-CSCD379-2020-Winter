@@ -15,13 +15,13 @@
     <div class="field">
         <label class="label">Url</label>
         <div class="control">
-            <input class="input" type="text" v-model ="clonedGift.Url"/>
+            <input class="input" type="text" v-model ="clonedGift.url"/>
         </div>
     </div>
     <div class="field">
         <label class="label">UserId</label>
         <div class="control">
-            <input class="input" type="text" v-model ="clonedGift.userId"/>
+            <input class="input" type="text" v-model.number ="clonedGift.userId"/>
         </div>
     </div>
     <div class="field is-grouped">
