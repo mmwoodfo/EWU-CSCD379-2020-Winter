@@ -3,19 +3,17 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-$blue: #002540;
-$blue-light: lighten($blue, 10%);
-$blue-lighter: lighten($blue, 20%);
+$red: #de1f26;
+$dark-red: #881719;
 
-$green: #357835;
-$green-lighter: lighten($green, 20%);
+$green: #2d544f;
+$dark-green: #132823;
 
-$gold: #ffb521;
-$crimson: #d23836;
+$gold: #eaaf1d;
 
-$primary: $crimson;
-$link: $green-lighter;
-$link-hover: $crimson;
+$primary: $dark-red;
+$link: $gold;
+$link-hover: $red;
 
 $table-background-color: transparent;
 
@@ -24,13 +22,13 @@ $family-sans-serif: "Nunito Sans", -apple-system, system-ui, BlinkMacSystemFont,
 $radius: 0;
 $radius-small: $radius;
 
-$body-background-color: $blue;
-$background: $blue-light;
+$body-background-color: $green;
+$background: $dark-green;
 $footer-background-color: $background;
 $button-background-color: $background;
 $button-border-color: lighten($button-background-color, 15);
 
-$title-color: $crimson;
+$title-color: $red;
 $subtitle-color: $gold;
 $subtitle-strong-color: $gold;
 
@@ -38,19 +36,19 @@ $text: $gold;
 $text-light: lighten($text, 10);
 $text-strong: darken($text, 5);
 
-$input-background-color: $green;
+$input-background-color: $dark-green;
 $input-selected-background-color: $green;
 $input-border-color: transparent;
 
 $navbar-height: 5rem;
-$navbar-background-color: $blue-light;
+$navbar-background-color: $dark-green;
 $navbar-item-color: white;
 $navbar-item-hover-color: $gold;
 $navbar-item-active-color: $green;
-$navbar-item-hover-background-color: $blue-lighter;
+$navbar-item-hover-background-color: $green;
 $navbar-item-active-background-color: transparent;
 $navbar-divider-background-color: lighten($primary, 10);
 
-$box-shadow: 0 0 0 1px $blue-lighter;
+$box-shadow: 0 0 0 1px $green;
 
 @import "~bulma/bulma";

@@ -1,45 +1,45 @@
 ﻿
-    <template>
-        <div>
-            <button class=" button" @click='createGift'>Create new</button>
-            <div class="field">
-                <label class="label">Search</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="search" />
-                </div>
+<template>
+    <div>
+        <button class=" button" @click='createGift'>Create new</button>
+        <div class="field">
+            <label class="label">Search</label>
+            <div class="control">
+                <input class="input" type="text" v-model="search" />
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Url</th>
-                        <th>UserId</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr v-for="gift in gifts" :id="gift.id"v-if="gift.title.includes(search)">
-                        <td>{{gift.id}}</td>
-                        <td>{{gift.title}}</td>
-                        <td>{{gift.description}}</td>
-                        <td>{{gift.url}}</td>
-                        <td>{{gift.userId}}</td>
-
-                        <td>
-                            <button class="button" @click='setGift(gift)'>Edit</button>
-                            <button class="button" @click='deleteGift(gift)'>Delete</button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <gift-details-component v-if="selectedGift != null"
-                                    :gift="selectedGift"
-                                    @gift-saved="refreshGifts"></gift-details-component>
         </div>
-    </template>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Url</th>
+                    <th>UserId</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr v-for="gift in gifts" :id="gift.id" v-if="gift.title.includes(search)">
+                    <td>{{gift.id}}</td>
+                    <td>{{gift.title}}</td>
+                    <td>{{gift.description}}</td>
+                    <td>{{gift.url}}</td>
+                    <td>{{gift.userId}}</td>
+
+                    <td>
+                        <button class="button" @click='setGift(gift)'>Edit</button>
+                        <button class="button" @click='deleteGift(gift)'>Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <gift-details-component v-if="selectedGift != null"
+                                :gift="selectedGift"
+                                @gift-saved="refreshGifts"></gift-details-component>
+    </div>
+</template>
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
     import { Gift, GiftClient } from '../../secretsanta-client';

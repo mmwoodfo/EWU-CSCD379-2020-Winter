@@ -1,37 +1,37 @@
 ﻿<template>
     <div>
-    <div class="field">
-        <label class="label">Title </label>
-        <div class="control">
-            <input class="input" type="text" v-model ="clonedGift.title"/>
+        <div class="field">
+            <label class="label">Title </label>
+            <div class="control">
+                <input class="input" type="text" v-model="clonedGift.title" />
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <label class="label">Description</label>
-        <div class="control">
-            <input class="input" type="text" v-model ="clonedGift.description"/>
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <input class="input" type="text" v-model="clonedGift.description" />
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <label class="label">Url</label>
-        <div class="control">
-            <input class="input" type="text" v-model ="clonedGift.url"/>
+        <div class="field">
+            <label class="label">Url</label>
+            <div class="control">
+                <input class="input" type="text" v-model="clonedGift.url" />
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <label class="label">UserId</label>
-        <div class="control">
-            <input class="input" type="text" v-model.number ="clonedGift.userId"/>
+        <div class="field">
+            <label class="label">UserId</label>
+            <div class="control">
+                <input class="input" type="text" v-model.number="clonedGift.userId" />
+            </div>
         </div>
-    </div>
-    <div class="field is-grouped">
-        <div class="control">
-            <button id="submit" class="button is-primary" @click.once='saveGift'>Submit</button>
+        <div class="field is-grouped">
+            <div class="control">
+                <button id="submit" class="button is-primary" @click.once='saveGift'>Submit</button>
+            </div>
+            <div class="control">
+                <a asp-action="Index" class="button is-light" @click='cancelEdit'>Cancel</a>
+            </div>
         </div>
-        <div class="control">
-            <a asp-action="Index" class="button is-light" @click='cancelEdit'>Cancel</a>
-        </div>
-    </div>
     </div>
 </template>
 <script lang="ts">
@@ -64,7 +64,7 @@
         cancelEdit() {
 
         }
-        
-        
+
+
     }
 </script>

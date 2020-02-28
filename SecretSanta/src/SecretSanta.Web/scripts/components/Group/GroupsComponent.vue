@@ -1,39 +1,39 @@
 ﻿
-    <template>
-        <div>
-            <button class=" button" @click='createGroup'>Create new</button>
-            <div class="field">
-                <label class="label">Search</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="search" />
-                </div>
+<template>
+    <div>
+        <button class=" button" @click='createGroup'>Create new</button>
+        <div class="field">
+            <label class="label">Search</label>
+            <div class="control">
+                <input class="input" type="text" v-model="search" />
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Title</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr v-for="group in groups" :id="group.id" v-if="group.title.includes(search)">
-                        <td>{{group.id}}</td>
-                        <td>{{group.title}}</td>
-                        <td>
-                            <button class="button" @click='setGroup(group)'>Edit</button>
-                            <button class="button" @click='deleteGroup(group)'>Delete</button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <group-details-component v-if="selectedGroup != null"
-                                     :group="selectedGroup"
-                                     @group-saved="refreshGroups"></group-details-component>
         </div>
-    </template>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Title</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr v-for="group in groups" :id="group.id" v-if="group.title.includes(search)">
+                    <td>{{group.id}}</td>
+                    <td>{{group.title}}</td>
+                    <td>
+                        <button class="button" @click='setGroup(group)'>Edit</button>
+                        <button class="button" @click='deleteGroup(group)'>Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <group-details-component v-if="selectedGroup != null"
+                                 :group="selectedGroup"
+                                 @group-saved="refreshGroups"></group-details-component>
+    </div>
+</template>
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
     import { Group, GroupClient } from '../../secretsanta-client';
@@ -62,7 +62,7 @@
         }
         async refreshGroups() {
             this.selectedGroup = null;
-           await this.loadGroups();
+            await this.loadGroups();
         }
         async deleteGroup(group: Group) {
             let groupClient = new GroupClient();

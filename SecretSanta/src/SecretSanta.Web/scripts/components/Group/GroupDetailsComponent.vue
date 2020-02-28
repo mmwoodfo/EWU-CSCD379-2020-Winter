@@ -1,19 +1,19 @@
 ﻿<template>
     <div>
-    <div class="field">
-        <label class="label">Title</label>
-        <div class="control">
-            <input class="input" type="text" v-model ="clonedGroup.title"/>
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input class="input" type="text" v-model="clonedGroup.title" />
+            </div>
         </div>
-    </div>
-    <div class="field is-grouped">
-        <div class="control">
-            <button id="submit" class="button is-primary" @click.once='saveGroup'>Submit</button>
+        <div class="field is-grouped">
+            <div class="control">
+                <button id="submit" class="button is-primary" @click.once='saveGroup'>Submit</button>
+            </div>
+            <div class="control">
+                <a asp-action="Index" class="button is-light" @click='cancelEdit'>Cancel</a>
+            </div>
         </div>
-        <div class="control">
-            <a asp-action="Index" class="button is-light" @click='cancelEdit'>Cancel</a>
-        </div>
-    </div>
     </div>
 </template>
 <script lang="ts">
@@ -46,7 +46,7 @@
         cancelEdit() {
 
         }
-        
-        
+
+
     }
 </script>

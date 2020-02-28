@@ -1,41 +1,41 @@
 ﻿
-    <template>
-        <div>
-            <button class=" button" @click='createUser'>Create new</button>
-            <div class="field">
-                <label class="label">Search</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="search" />
-                </div>
+<template>
+    <div>
+        <button class=" button" @click='createUser'>Create new</button>
+        <div class="field">
+            <label class="label">Search</label>
+            <div class="control">
+                <input class="input" type="text" v-model="search" />
             </div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr v-for="user in users" :id="user.id" v-if="user.firstName.includes(search) || user.lastName.includes(search)">
-                        <td>{{user.id}}</td>
-                        <td>{{user.firstName}}</td>
-                        <td>{{user.lastName}}</td>
-                        <td>
-                            <button class="button" @click='setUser(user)'>Edit</button>
-                            <button class="button" @click='deleteUser(user)'>Delete</button>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <user-details-component v-if="selectedUser != null"
-                                    :user="selectedUser"
-                                    @user-saved="refreshUsers"></user-details-component>
         </div>
-    </template>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr v-for="user in users" :id="user.id" v-if="user.firstName.includes(search) || user.lastName.includes(search)">
+                    <td>{{user.id}}</td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>
+                        <button class="button" @click='setUser(user)'>Edit</button>
+                        <button class="button" @click='deleteUser(user)'>Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <user-details-component v-if="selectedUser != null"
+                                :user="selectedUser"
+                                @user-saved="refreshUsers"></user-details-component>
+    </div>
+</template>
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
     import { User, UserClient } from '../../secretsanta-client';
@@ -59,13 +59,13 @@
         setUser(user: User) {
             this.selectedUser = user;
         }
-        
+
         createUser() {
             this.selectedUser = <User>{};
         }
         async refreshUsers() {
             this.selectedUser = null;
-           await this.loadUsers();
+            await this.loadUsers();
         }
         async deleteUser(user: User) {
             let userClient = new UserClient();
