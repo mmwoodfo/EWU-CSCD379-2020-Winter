@@ -2,7 +2,12 @@
     <template>
         <div>
             <button class=" button" @click='createGift'>Create new</button>
-
+            <div class="field">
+                <label class="label">Search</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="search" />
+                </div>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -15,7 +20,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="gift in gifts" :id="gift.id">
+                    <tr v-for="gift in gifts" :id="gift.id"v-if="gift.title.includes(search)">
                         <td>{{gift.id}}</td>
                         <td>{{gift.title}}</td>
                         <td>{{gift.description}}</td>
@@ -47,7 +52,7 @@
     export default class GiftsComponent extends Vue {
         gifts: Gift[] = null;
         selectedGift: Gift = null;
-        search: string = null;
+        search: string = "";
         async loadGifts() {
             let giftClient = new GiftClient();
             this.gifts = await giftClient.getAll();
@@ -55,7 +60,6 @@
         async mounted() {
             await this.loadGifts();
         }
-
         setGift(gift: Gift) {
             this.selectedGift = gift;
         }

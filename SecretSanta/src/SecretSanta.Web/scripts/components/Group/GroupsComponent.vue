@@ -2,6 +2,12 @@
     <template>
         <div>
             <button class=" button" @click='createGroup'>Create new</button>
+            <div class="field">
+                <label class="label">Search</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="search" />
+                </div>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -12,7 +18,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="group in groups" :id="group.id">
+                    <tr v-for="group in groups" :id="group.id" v-if="group.title.includes(search)">
                         <td>{{group.id}}</td>
                         <td>{{group.title}}</td>
                         <td>
@@ -23,9 +29,9 @@
 
                 </tbody>
             </table>
-            <group-details-component v-if="selectedGroup != null" 
-                                    :group="selectedGroup"
-                                    @group-saved="refreshGroups"></group-details-component>
+            <group-details-component v-if="selectedGroup != null"
+                                     :group="selectedGroup"
+                                     @group-saved="refreshGroups"></group-details-component>
         </div>
     </template>
 <script lang="ts">
@@ -40,6 +46,7 @@
     export default class GroupsComponent extends Vue {
         groups: Group[] = null;
         selectedGroup: Group = null;
+        search: string = "";
         async loadGroups() {
             let groupClient = new GroupClient();
             this.groups = await groupClient.getAll();

@@ -2,6 +2,12 @@
     <template>
         <div>
             <button class=" button" @click='createUser'>Create new</button>
+            <div class="field">
+                <label class="label">Search</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="search" />
+                </div>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -13,7 +19,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="user in users" :id="user.id">
+                    <tr v-for="user in users" :id="user.id" v-if="user.firstName.includes(search) || user.lastName.includes(search)">
                         <td>{{user.id}}</td>
                         <td>{{user.firstName}}</td>
                         <td>{{user.lastName}}</td>
@@ -25,7 +31,7 @@
 
                 </tbody>
             </table>
-            <user-details-component v-if="selectedUser != null" 
+            <user-details-component v-if="selectedUser != null"
                                     :user="selectedUser"
                                     @user-saved="refreshUsers"></user-details-component>
         </div>
@@ -42,6 +48,7 @@
     export default class UsersComponent extends Vue {
         users: User[] = null;
         selectedUser: User = null;
+        search: string = "";
         async loadUsers() {
             let userClient = new UserClient();
             this.users = await userClient.getAll();
