@@ -47,23 +47,30 @@
         groups: Group[] = null;
         selectedGroup: Group = null;
         search: string = "";
+
         async loadGroups() {
             let groupClient = new GroupClient();
             this.groups = await groupClient.getAll();
         }
+
         async mounted() {
             await this.loadGroups();
         }
+
         setGroup(group: Group) {
-            this.selectedGroup = group;
+            let tempGroup = { ...group };
+            this.selectedGroup = <Group>tempGroup;
         }
+
         createGroup() {
             this.selectedGroup = <Group>{};
         }
+
         async refreshGroups() {
             this.selectedGroup = null;
             await this.loadGroups();
         }
+
         async deleteGroup(group: Group) {
             let groupClient = new GroupClient();
             if (confirm(`are you sure you want to delete ${group.title}`)) {
@@ -71,7 +78,6 @@
             }
             await this.refreshGroups();
         }
-
     }
 </script>
 

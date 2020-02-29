@@ -53,23 +53,30 @@
         gifts: Gift[] = null;
         selectedGift: Gift = null;
         search: string = "";
+
         async loadGifts() {
             let giftClient = new GiftClient();
             this.gifts = await giftClient.getAll();
         }
+
         async mounted() {
             await this.loadGifts();
         }
+
         setGift(gift: Gift) {
-            this.selectedGift = gift;
+            let tempGift = { ...gift };
+            this.selectedGift = <Gift>tempGift;
         }
+
         createGift() {
             this.selectedGift = <Gift>{};
         }
+
         async refreshGifts() {
             this.selectedGift = null;
            await this.loadGifts();
         }
+
         async deleteGift(gift: Gift) {
             let giftClient = new GiftClient();
             if (confirm(`are you sure you want to delete ${gift.title}`)) {
@@ -77,7 +84,6 @@
             }
             await this.refreshGifts();
         }
-
     }
 </script>
 

@@ -1,7 +1,7 @@
 ﻿
 <template>
     <div>
-        <button class=" button" @click='createUser'>Create new</button>
+        <button class=" button" @click='createUser()'>Create new</button>
         <div class="field">
             <label class="label">Search</label>
             <div class="control">
@@ -18,7 +18,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 <tr v-for="user in users" :id="user.id" v-if="user.firstName.includes(search) || user.lastName.includes(search)">
                     <td>{{user.id}}</td>
                     <td>{{user.firstName}}</td>
@@ -28,12 +27,12 @@
                         <button class="button" @click='deleteUser(user)'>Delete</button>
                     </td>
                 </tr>
-
             </tbody>
         </table>
         <user-details-component v-if="selectedUser != null"
                                 :user="selectedUser"
-                                @user-saved="refreshUsers"></user-details-component>
+                                @user-saved="refreshUsers()"></user-details-component>
+
     </div>
 </template>
 <script lang="ts">
@@ -49,24 +48,30 @@
         users: User[] = null;
         selectedUser: User = null;
         search: string = "";
+
         async loadUsers() {
             let userClient = new UserClient();
             this.users = await userClient.getAll();
-        }
-        async mounted() {
-            await this.loadUsers();
-        }
-        setUser(user: User) {
-            this.selectedUser = user;
         }
 
         createUser() {
             this.selectedUser = <User>{};
         }
+
+        async mounted() {
+            await this.loadUsers();
+        }
+
+        setUser(user: User) {
+            let tempUser = { ...user };
+            this.selectedUser = <User>tempUser;
+        }
+
         async refreshUsers() {
             this.selectedUser = null;
             await this.loadUsers();
         }
+
         async deleteUser(user: User) {
             let userClient = new UserClient();
             if (confirm(`are you sure you want to delete ${user.firstName} ${user.lastName}`)) {

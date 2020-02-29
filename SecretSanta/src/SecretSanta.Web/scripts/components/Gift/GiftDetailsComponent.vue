@@ -3,25 +3,25 @@
         <div class="field">
             <label class="label">Title </label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedGift.title" />
+                <input class="input" type="text" v-model="gift.title" />
             </div>
         </div>
         <div class="field">
             <label class="label">Description</label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedGift.description" />
+                <input class="input" type="text" v-model="gift.description" />
             </div>
         </div>
         <div class="field">
             <label class="label">Url</label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedGift.url" />
+                <input class="input" type="text" v-model="gift.url" />
             </div>
         </div>
         <div class="field">
             <label class="label">UserId</label>
             <div class="control">
-                <input class="input" type="text" v-model.number="clonedGift.userId" />
+                <input class="input" type="text" v-model.number="gift.userId" />
             </div>
         </div>
         <div class="field is-grouped">
@@ -41,23 +41,22 @@
     export default class GiftDetailsComponent extends Vue {
         @Prop()
         gift: Gift;
-        clonedGift: Gift = <Gift>{};
 
         constructor() {
             super();
         }
         mounted() {
             let tempGift = { ...this.gift };
-            this.clonedGift = <Gift>tempGift;
+            this.gift = <Gift>tempGift;
         }
         @Emit('gift-saved')
         async saveGift() {
             let giftClient = new GiftClient();
-            if (this.clonedGift.id > 0) {
-                await giftClient.put(this.clonedGift.id, this.clonedGift);
+            if (this.gift.id > 0) {
+                await giftClient.put(this.gift.id, this.gift);
             }
             else {
-                await giftClient.post(this.clonedGift);
+                await giftClient.post(this.gift);
             }
         }
         @Emit('gift-saved')

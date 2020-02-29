@@ -3,7 +3,7 @@
         <div class="field">
             <label class="label">Title</label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedGroup.title" />
+                <input class="input" type="text" v-model="group.title" />
             </div>
         </div>
         <div class="field is-grouped">
@@ -23,23 +23,22 @@
     export default class GroupDetailsComponent extends Vue {
         @Prop()
         group: Group;
-        clonedGroup: Group = <Group>{};
 
         constructor() {
             super();
         }
         mounted() {
             let tempGroup = { ...this.group };
-            this.clonedGroup = <Group>tempGroup;
+            this.group = <Group>tempGroup;
         }
         @Emit('group-saved')
         async saveGroup() {
             let groupClient = new GroupClient();
-            if (this.clonedGroup.id > 0) {
-                await groupClient.put(this.clonedGroup.id, this.clonedGroup);
+            if (this.group.id > 0) {
+                await groupClient.put(this.group.id, this.group);
             }
             else {
-                await groupClient.post(this.clonedGroup);
+                await groupClient.post(this.group);
             }
         }
         @Emit('group-saved')

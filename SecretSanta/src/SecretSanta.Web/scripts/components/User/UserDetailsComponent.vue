@@ -3,13 +3,13 @@
         <div class="field">
             <label class="label">First Name</label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedUser.firstName" />
+                <input class="input" type="text" v-model="user.firstName" />
             </div>
         </div>
         <div class="field">
             <label class="label">Last Name</label>
             <div class="control">
-                <input class="input" type="text" v-model="clonedUser.lastName" />
+                <input class="input" type="text" v-model="user.lastName" />
             </div>
         </div>
         <div class="field is-grouped">
@@ -29,25 +29,22 @@
     export default class UserDetailsComponent extends Vue {
         @Prop()
         user: User;
-        clonedUser: User = <User>{};
 
         constructor() {
             super();
         }
-        mounted() {
-            let tempUser = { ...this.user };
-            this.clonedUser = <User>tempUser;
-        }
+
         @Emit('user-saved')
         async saveUser() {
             let userClient = new UserClient();
-            if (this.clonedUser.id > 0) {
-                await userClient.put(this.clonedUser.id, this.clonedUser);
+            if (this.user.id > 0) {
+                await userClient.put(this.user.id, this.user);
             }
             else {
-                await userClient.post(this.clonedUser);
+                await userClient.post(this.user);
             }
         }
+
         @Emit('user-saved')
         cancelEdit() {
 
