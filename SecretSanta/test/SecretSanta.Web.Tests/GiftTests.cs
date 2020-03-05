@@ -107,14 +107,12 @@ namespace SecretSanta.Web.Tests
         public void ValidateLinks_GiftsListPage()
         {
             Driver.Navigate().GoToUrl(new Uri(AppUrl));
-            IWebElement element = Driver.FindElement(By.Id("create-gift-btn"));
             IReadOnlyCollection<IWebElement> links = Driver.FindElements(By.TagName("a"));
 
             foreach (var link in links)
             {
                 if (link.Displayed) //there is a null/empty link to create the hamburger dropdown mobile menu
                 {
-                    string title = link.Text;
                     string url = link.GetAttribute("href");
                     Assert.IsTrue(Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute));
                 }
