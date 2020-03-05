@@ -20,7 +20,7 @@ Write functional web tests using Selenium to verify website behavior.
 
 ## Extra Credit
 
-- Add a test that verifies all links within the app are valid. ✔❌
+- Add a test that verifies all links within the app are valid. ✔
 
 ## Additional Reference Material
 
