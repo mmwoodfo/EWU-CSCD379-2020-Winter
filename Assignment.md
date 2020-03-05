@@ -10,7 +10,7 @@ Write functional web tests using Selenium to verify website behavior.
 4. Enter the gift information. ✔
 5. Find the Submit button **via Id** and Submit. ✔
 6. Verify the gift appears in the list. ✔
-7. Take a screen shot of the updated Gifts list (using Selenium). ✔❌
+7. Take a screen shot of the updated Gifts list (using Selenium). ✔
 
 ## Have Azure DevOps pipeline run Selenium tests
 
