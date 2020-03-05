@@ -67,23 +67,36 @@ namespace SecretSanta.Web.Tests
           .ToList();
         }
 
+        public void TakeScreenShot(string fileName)
+        {
+            ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile($"{fileName}.png", ScreenshotImageFormat.Png);
+        }
+
         [TestMethod]
         [TestCategory("Chrome")]
         public void Create_Gift_Success()
         {
+            //Arrange
+            string title = "TestGift",
+                   description = "This gift was made by the 'Create_Gift_Success()' test.",
+                   url = "www.gifttest.com";
+
             ClickCreateButton();
-            EnterGiftInformation("Title", "Description", "www.url.com", 1);
+            EnterGiftInformation(title, description, url, 1);
             ClickSubmitButton();
-            Thread.Sleep(3000);
+            Thread.Sleep(5000);
 
+            //Act
             var giftAttributes = GetListOfGifts();
+            int index = giftAttributes.IndexOf(title);
 
-            int index = giftAttributes.IndexOf("Title");
+            //Assert
+            Assert.AreEqual(title,giftAttributes[index]);
+            Assert.AreEqual(description, giftAttributes[index+1]);
+            Assert.AreEqual(url, giftAttributes[index+2]);
 
-            //Assert that gift was added
-            Assert.AreEqual("Title",giftAttributes[index]);
-            Assert.AreEqual("Description", giftAttributes[index+1]);
-            Assert.AreEqual("www.url.com", giftAttributes[index+2]);
+            //Take screen shot upon success
+            TakeScreenShot("Create_Gift_Success_Test_Screenshot");
         }
 
         [TestCleanup()]
