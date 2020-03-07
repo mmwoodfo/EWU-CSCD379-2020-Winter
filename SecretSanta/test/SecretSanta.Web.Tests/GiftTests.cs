@@ -7,6 +7,7 @@ using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using System.Diagnostics;
 
 namespace SecretSanta.Web.Tests
 {
@@ -17,8 +18,30 @@ namespace SecretSanta.Web.Tests
         public TestContext? TestContext { get; set; }
         [NotNull]
         private IWebDriver? Driver { get; set; }
+        private static string ApiUrl { get;} = "https://localhost:44388";
+        private static string WebUrl { get; } = "https://localhost:44394";
+        private static Process? ApiHostProcess { get; set; }
+        private static Process? WebHostProcess { get; set; }
         string AppUrl { get; } = "https://localhost:44394/Gifts";
 
+        [ClassInitialize]
+        public static void ClassInitalize(TestContext testContext)
+        {
+            string ProjectPath = testContext.DeploymentDirectory;
+            string ApiProjectPath = ProjectPath + "\\src\\SecretSanta.Api";
+            string WebProjectPath = ProjectPath + "\\src\\SecretSanta.Web";
+            Console.WriteLine(ProjectPath);
+            ApiHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Api\\SecretSanta.Api.csproj");
+            WebHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Web\\SecretSanta.Web.csproj");
+        }
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            //ApiHostProcess?.CloseMainWindow();
+            //ApiHostProcess?.Close();
+            //WebHostProcess?.CloseMainWindow();
+            //WebHostProcess?.Close();
+        }
         [TestInitialize]
         public void TestInitialize()
         {
