@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
 using System.Diagnostics;
+using SecretSanta.Web.Api;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text;
 
 namespace SecretSanta.Web.Tests
 {
@@ -21,31 +25,66 @@ namespace SecretSanta.Web.Tests
         private static string ApiUrl { get;} = "https://localhost:44388";
         private static string WebUrl { get; } = "https://localhost:44394";
         private static Process? ApiHostProcess { get; set; }
+        private static Process? NpmProcess { get; set; }
         private static Process? WebHostProcess { get; set; }
         string AppUrl { get; } = "https://localhost:44394/Gifts";
 
         [ClassInitialize]
         public static void ClassInitalize(TestContext testContext)
         {
+
+            //var psiNpmRunDist = new ProcessStartInfo
+            //{
+            //    FileName = "cmd",
+            //    RedirectStandardInput = true,
+            //    WorkingDirectory = "C:\\Users\\mason\\Source\\Repos\\EWU-CSCD379-2020-Winter\\SecretSanta\\src\\SecretSanta.Web"
+            //};
+            //NpmProcess = Process.Start(psiNpmRunDist);
+            //NpmProcess.StandardInput.WriteLine("npm run build:dev");
+            //NpmProcess.WaitForExit(15000);
+            //NpmProcess = Process.Start("cmd", "npm run build:dev run --prefix ..\\..\\..\\..\\..\\src\\SecretSanta.Web");
+            //UserClient userClient = new UserClient();
+            HttpClient client = new HttpClient();   
+            //Uri uri = new Uri(ApiUrl + "api/User", UriKind.RelativeOrAbsolute);
+            User user = new User();
+            user.FirstName = "inigo";
+            user.LastName = "montoya";
+            //UserClient userClient = new UserClient(new HttpClient());
+            //userClient.PostAsync(user);
+            //Console.WriteLine(user.Id);
+            using var content = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
+            client.PostAsync(ApiUrl+ "/api/User", content);
+            client.PostAsync(ApiUrl, content);
             string ProjectPath = testContext.DeploymentDirectory;
+            
             string ApiProjectPath = ProjectPath + "\\src\\SecretSanta.Api";
             string WebProjectPath = ProjectPath + "\\src\\SecretSanta.Web";
             Console.WriteLine(ProjectPath);
             ApiHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Api\\SecretSanta.Api.csproj");
             WebHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Web\\SecretSanta.Web.csproj");
+            //UserClient userClient = new UserClient(new HttpClient());
+            //userClient.PostAsync(user);
+            
+
         }
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            //ApiHostProcess?.CloseMainWindow();
-            //ApiHostProcess?.Close();
-            //WebHostProcess?.CloseMainWindow();
-            //WebHostProcess?.Close();
+            //NpmProcess.Kill();
+            //NpmProcess.Close();
+            //NpmProcess.CloseMainWindow();
+            ApiHostProcess.Kill();
+            ApiHostProcess.CloseMainWindow();
+            ApiHostProcess.Close();
+            WebHostProcess.Kill();
+            WebHostProcess.CloseMainWindow();
+            WebHostProcess.Close();
         }
         [TestInitialize]
         public void TestInitialize()
         {
             Driver = new ChromeDriver();
+            //Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
             Driver.Manage().Timeouts().ImplicitWait = new System.TimeSpan(0, 0, 10);
         }
 
@@ -79,8 +118,8 @@ namespace SecretSanta.Web.Tests
 
             //Assert
             Assert.AreEqual<string>(title, giftTitleElement.GetProperty("value"));
-            Assert.AreEqual<string>(description, giftDescriptionElement.GetProperty("value"));
-            Assert.AreEqual<string>(url, giftUrlElement.GetProperty("value"));
+           Assert.AreEqual<string>(description, giftDescriptionElement.GetProperty("value"));
+           Assert.AreEqual<string>(url, giftUrlElement.GetProperty("value"));
         }
 
         public void ClickSubmitButton()
@@ -105,9 +144,11 @@ namespace SecretSanta.Web.Tests
             string title = "TestGift",
                    description = "This gift was made by the 'Create_Gift_Success()' test.",
                    url = "www.gifttest.com";
-
+            Thread.Sleep(2000);
             ClickCreateButton();
-            EnterGiftInformation(title, description, url, 1);
+            Thread.Sleep(5000);
+            EnterGiftInformation(title, description, url, 0);
+            Thread.Sleep(5000);
             ClickSubmitButton();
             Thread.Sleep(5000);
 
