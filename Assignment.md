@@ -4,7 +4,7 @@ Write functional web tests using Selenium to verify website behavior.
 
 ## Write a selenium test to add a gift
 
-1. Add a user via the API (this is the only step not using Selenium) ✔❌
+1. Add a user via the API (this is the only step not using Selenium) ✔
 2. Navigate to the ~/Gifts Page. ✔
 3. Find the Create Gift button **using a CSS Selector** and click it. ✔
 4. Enter the gift information. ✔
