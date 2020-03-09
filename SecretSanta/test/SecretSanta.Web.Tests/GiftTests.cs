@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -85,11 +86,6 @@ namespace SecretSanta.Web.Tests
             Driver.Manage().Timeouts().ImplicitWait = new System.TimeSpan(0, 0, 10);
         }
 
-        public void TakeScreenShot(string fileName)
-        {
-            ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile($"{fileName}.png", ScreenshotImageFormat.Png);
-        }
-
         //----------------- CREATE GIFTS -----------------//
 
         public void ClickCreateButton()
@@ -156,7 +152,9 @@ namespace SecretSanta.Web.Tests
             Assert.AreEqual(url, giftAttributes[index + 2]);
 
             //Take screen shot upon success
-            TakeScreenShot("Create_Gift_Success_Test_Screenshot");
+            string path = $"{Directory.GetCurrentDirectory()}CreateGiftTest.png";
+            ((ITakesScreenshot)Driver).GetScreenshot().SaveAsFile(path, ScreenshotImageFormat.Png);
+            this.TestContext.AddResultFile(path);
         }
 
         ////----------------- VALIDATE LINKS -----------------//
