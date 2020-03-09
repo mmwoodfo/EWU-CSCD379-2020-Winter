@@ -172,8 +172,7 @@ namespace SecretSanta.Web.Tests
                 if (link.Displayed) //there is a null/empty link to create the hamburger dropdown mobile menu
                 {
                     string url = link.GetAttribute("href");
-                    Uri uriResult;
-                    Assert.IsTrue(Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uriResult));
+                    Assert.IsTrue(Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute));
                 }
             }
         }
