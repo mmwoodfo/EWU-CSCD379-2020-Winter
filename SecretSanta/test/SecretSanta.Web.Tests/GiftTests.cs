@@ -1,17 +1,17 @@
-﻿﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using OpenQA.Selenium.Support.UI;
-using System.Collections.Generic;
-using System.Threading;
-using System.Linq;
-using System.Diagnostics;
 using SecretSanta.Web.Api;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SecretSanta.Web.Tests
 {
@@ -34,27 +34,29 @@ namespace SecretSanta.Web.Tests
 
             ApiHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Api\\SecretSanta.Api.csproj");
             WebHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Web\\SecretSanta.Web.csproj");
-            ApiHostProcess.WaitForExit(6000);
+            ApiHostProcess.WaitForExit(8000);
 
             //AddUser
-            
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri("http://localhost:5000/");
-            Console.WriteLine("Uri passed");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
             UserClient userClient = new UserClient(httpClient);
-            UserInput userInput = new UserInput();
 
-            userInput.FirstName = "Test";
-            userInput.LastName = "User";
-            Console.WriteLine("Pre-post");
-            await userClient.PostAsync(userInput);
-            Console.WriteLine("post passed");
+            var users = await userClient.GetAllAsync();
+            if(users.Count <= 0)
+            {
+                UserInput userInput = new UserInput
+                {
+                    FirstName = "Test",
+                    LastName = "User"
+                };
+
+                await userClient.PostAsync(userInput);
+            }
             httpClient.Dispose();
-            Console.WriteLine("posted and disposed");
 
         }
 
@@ -78,8 +80,8 @@ namespace SecretSanta.Web.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-           //Driver = new ChromeDriver();
-           Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
+            Driver = new ChromeDriver();
+            //Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
             Driver.Manage().Timeouts().ImplicitWait = new System.TimeSpan(0, 0, 10);
         }
 
