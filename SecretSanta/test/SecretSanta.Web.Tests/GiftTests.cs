@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -24,7 +24,7 @@ namespace SecretSanta.Web.Tests
         private IWebDriver? Driver { get; set; }
         private static Process? ApiHostProcess { get; set; }
         private static Process? WebHostProcess { get; set; }
-        string AppUrl { get; } = "https://localhost:44394/Gifts";
+        string AppUrl { get; } = "http://localhost:5001/Gifts";
 
         [ClassInitialize]
         public static async Task ClassInitalize(TestContext testContext)
@@ -32,15 +32,15 @@ namespace SecretSanta.Web.Tests
             if (testContext is null)
                 throw new ArgumentNullException(nameof(testContext));
 
-            string ProjectPath = testContext.DeploymentDirectory;
-
-            Console.WriteLine(ProjectPath);
             ApiHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Api\\SecretSanta.Api.csproj");
             WebHostProcess = Process.Start("dotnet.exe", "run -p ..\\..\\..\\..\\..\\src\\SecretSanta.Web\\SecretSanta.Web.csproj");
+            ApiHostProcess.WaitForExit(6000);
 
             //AddUser
+            
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:44388/");
+            httpClient.BaseAddress = new Uri("http://localhost:5000/");
+            Console.WriteLine("Uri passed");
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -50,8 +50,11 @@ namespace SecretSanta.Web.Tests
 
             userInput.FirstName = "Test";
             userInput.LastName = "User";
+            Console.WriteLine("Pre-post");
             await userClient.PostAsync(userInput);
+            Console.WriteLine("post passed");
             httpClient.Dispose();
+            Console.WriteLine("posted and disposed");
 
         }
 
@@ -75,8 +78,8 @@ namespace SecretSanta.Web.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            Driver = new ChromeDriver();
-            //Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
+           //Driver = new ChromeDriver();
+           Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
             Driver.Manage().Timeouts().ImplicitWait = new System.TimeSpan(0, 0, 10);
         }
 
@@ -129,7 +132,7 @@ namespace SecretSanta.Web.Tests
         }
 
         [TestMethod]
-        [TestCategory("Chrome")]
+        [TestCategory("ChromeC")]
         public void Create_Gift_Success()
         {
             //Arrange
@@ -154,7 +157,7 @@ namespace SecretSanta.Web.Tests
             TakeScreenShot("Create_Gift_Success_Test_Screenshot");
         }
 
-        //----------------- VALIDATE LINKS -----------------//
+        ////----------------- VALIDATE LINKS -----------------//
         [TestMethod]
         [TestCategory("Chrome")]
         public void ValidateLinks_GiftsListPage()
