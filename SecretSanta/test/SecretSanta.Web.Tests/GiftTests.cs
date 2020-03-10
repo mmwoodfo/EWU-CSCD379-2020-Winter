@@ -81,8 +81,8 @@ namespace SecretSanta.Web.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            //Driver = new ChromeDriver();
-            Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
+            Driver = new ChromeDriver();
+            //Driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));//supposedly required for Azure
             Driver.Manage().Timeouts().ImplicitWait = new System.TimeSpan(0, 0, 10);
         }
 
@@ -136,7 +136,7 @@ namespace SecretSanta.Web.Tests
             //Arrange
             string title = "TestGift",
                    description = "This gift was made by the 'Create_Gift_Success()' test.",
-                   url = "www.gifttest.com";
+                   url = "https://www.gifttest.com";
             ClickCreateButton();
             EnterGiftInformation(title, description, url, 0);
             ClickSubmitButton();
